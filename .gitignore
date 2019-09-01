@@ -1,0 +1,7 @@
+
+# Ignore .vs folder.
+.vs/*
+
+# Ignore Debug folders.
+Debug/*
+Project/Debug/*
