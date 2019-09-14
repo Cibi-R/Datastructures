@@ -2,6 +2,7 @@
 #include STACKt_H
 #include STACK_DYNAMICt_H
 #include QUEUE_DYNAMICt_H
+#include SINGLE_LIST_STATICt_H
 #include SINGLE_LISTt_H
 
 int main()
@@ -18,7 +19,9 @@ int main()
 
 	//Execute_MyQueue();
 
-	removeDuplicates(Rm_Duplicate);
+	//removeDuplicates(Rm_Duplicate);
+
+	Execute_Single_List_Static();
 
 	while (1);
 }

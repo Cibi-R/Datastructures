@@ -76,7 +76,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>G:\DataStructure\Project\Project\include;G:\DataStructure\Project\Project;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Cibi_Learning\ml\Data_Algo\Datastructures\Project\include;E:\Cibi_Learning\ml\Data_Algo\Datastructures\Project;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -88,6 +88,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>E:\Cibi_Learning\ml\Data_Algo\Datastructures\Project;E:\Cibi_Learning\ml\Data_Algo\Datastructures\Project\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,6 +128,7 @@
     <ClCompile Include="lib\list\src\circular_list.c" />
     <ClCompile Include="lib\list\src\double_list.c" />
     <ClCompile Include="lib\list\src\single_list.c" />
+    <ClCompile Include="lib\list\src\single_list_static.c" />
     <ClCompile Include="lib\queue\src\queue.c" />
     <ClCompile Include="lib\queue\src\queue_dynamic.c" />
     <ClCompile Include="lib\stack\src\stack.c" />
@@ -134,6 +136,7 @@
     <ClCompile Include="src.c" />
     <ClCompile Include="trash\list\src\circular_list_t.c" />
     <ClCompile Include="trash\list\src\double_list_t.c" />
+    <ClCompile Include="trash\list\src\single_list_static_t.c" />
     <ClCompile Include="trash\list\src\single_list_t.c" />
     <ClCompile Include="trash\queue\src\queue_dynamic_t.c" />
     <ClCompile Include="trash\queue\src\queue_t.c" />
@@ -147,12 +150,14 @@
     <ClInclude Include="lib\list\api\circular_list.h" />
     <ClInclude Include="lib\list\api\double_list.h" />
     <ClInclude Include="lib\list\api\single_list.h" />
+    <ClInclude Include="lib\list\api\single_list_static.h" />
     <ClInclude Include="lib\queue\api\queue.h" />
     <ClInclude Include="lib\queue\api\queue_dynamic.h" />
     <ClInclude Include="lib\stack\api\stack.h" />
     <ClInclude Include="lib\stack\api\stack_dynamic.h" />
     <ClInclude Include="trash\list\api\circular_list_t.h" />
     <ClInclude Include="trash\list\api\double_list_t.h" />
+    <ClInclude Include="trash\list\api\single_list_static_t.h" />
     <ClInclude Include="trash\list\api\single_list_t.h" />
     <ClInclude Include="trash\queue\api\queue_dynamic_t.h" />
     <ClInclude Include="trash\queue\api\queue_t.h" />

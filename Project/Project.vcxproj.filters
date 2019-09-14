@@ -60,6 +60,12 @@
     <ClCompile Include="trash\list\src\circular_list_t.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="trash\list\src\single_list_static_t.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\list\src\single_list_static.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lib\stack\api\stack.h">
@@ -111,6 +117,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="trash\list\api\circular_list_t.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="trash\list\api\single_list_static_t.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\list\api\single_list_static.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
