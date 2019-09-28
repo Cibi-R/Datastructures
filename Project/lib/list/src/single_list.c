@@ -10,7 +10,7 @@ MySingleList* GetSingleList(void)
 	{
 		NewList->Next = NULL;
 
-		/* "Element" member of headnode is used as the Size of the list. */
+		/* "Element" member of headnode is used to store the Size of the list. */
 		NewList->Element = -1;
 	}
 
@@ -51,6 +51,12 @@ unsigned char SingleList_PushElement(MySingleList* HeadNode, ELEMENT_TYPE_SINGLE
 
 		return 1;
 	}
+
+	else
+	{
+		/* Incase of failure of insertion delete the newly created node. */
+		if (NewNode != NULL) { free(NewNode); }
+	}
 }
 
 ELEMENT_TYPE_SINGLE_LIST SingleList_GetElement(MySingleList* HeadNode,unsigned char Position)
@@ -84,26 +90,29 @@ unsigned char SingleList_InsertElement(MySingleList* HeadNode, ELEMENT_TYPE_SING
 	{
 		MySingleList *NewNode = (MySingleList*)malloc(sizeof(MySingleList));
 
-		MySingleList* Temp = HeadNode;
-
-		int Current_Position = -1;
-
 		if (NewNode != NULL)
 		{
-			while ((Temp->Next != NULL) && (Current_Position < (Position-1)))
+			MySingleList* Temp = HeadNode;
+
+			int Current_Position = -1;
+
+			if (NewNode != NULL)
 			{
-				Temp = Temp->Next;
+				while ((Temp->Next != NULL) && (Current_Position < (Position - 1)))
+				{
+					Temp = Temp->Next;
 
-				Current_Position++;
+					Current_Position++;
+				}
+
+				NewNode->Next = Temp->Next;
+
+				Temp->Next = NewNode;
+
+				HeadNode->Element++;
+
+				RetVal = 1;
 			}
-
-			NewNode->Next = Temp->Next;
-
-			Temp->Next = NewNode;
-
-			HeadNode->Element++;
-
-			RetVal = 1;
 		}
 	}
 
