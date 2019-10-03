@@ -66,6 +66,9 @@
     <ClCompile Include="lib\list\src\single_list_static.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lib\tree\src\binary_tree.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lib\stack\api\stack.h">
@@ -123,6 +126,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\list\api\single_list_static.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\tree\api\binary_tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="trash\tree\api\binary_tree_t.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="trash\tree\src\binary_tree_t.c">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

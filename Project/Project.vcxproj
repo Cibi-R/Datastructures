@@ -133,6 +133,7 @@
     <ClCompile Include="lib\queue\src\queue_dynamic.c" />
     <ClCompile Include="lib\stack\src\stack.c" />
     <ClCompile Include="lib\stack\src\stack_dynamic.c" />
+    <ClCompile Include="lib\tree\src\binary_tree.c" />
     <ClCompile Include="src.c" />
     <ClCompile Include="trash\list\src\circular_list_t.c" />
     <ClCompile Include="trash\list\src\double_list_t.c" />
@@ -155,6 +156,7 @@
     <ClInclude Include="lib\queue\api\queue_dynamic.h" />
     <ClInclude Include="lib\stack\api\stack.h" />
     <ClInclude Include="lib\stack\api\stack_dynamic.h" />
+    <ClInclude Include="lib\tree\api\binary_tree.h" />
     <ClInclude Include="trash\list\api\circular_list_t.h" />
     <ClInclude Include="trash\list\api\double_list_t.h" />
     <ClInclude Include="trash\list\api\single_list_static_t.h" />
@@ -163,6 +165,8 @@
     <ClInclude Include="trash\queue\api\queue_t.h" />
     <ClInclude Include="trash\stack\api\stack_dynamic_t.h" />
     <ClInclude Include="trash\stack\api\stack_t.h" />
+    <ClInclude Include="trash\tree\api\binary_tree_t.h" />
+    <ClInclude Include="trash\tree\src\binary_tree_t.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

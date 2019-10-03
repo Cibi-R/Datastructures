@@ -46,7 +46,7 @@ unsigned char SingleList_PushElement(MySingleList* HeadNode, ELEMENT_TYPE_SINGLE
 
 		NewNode->Next = NULL;
 
-		/* Element member of headnode is used as a Size of the list. */
+		/* Element member of headnode is used to store the Size of list. */
 		HeadNode->Element++;
 
 		return 1;
@@ -59,125 +59,152 @@ unsigned char SingleList_PushElement(MySingleList* HeadNode, ELEMENT_TYPE_SINGLE
 	}
 }
 
-ELEMENT_TYPE_SINGLE_LIST SingleList_GetElement(MySingleList* HeadNode,unsigned char Position)
+ELEMENT_TYPE_SINGLE_LIST SingleList_GetElement(MySingleList* MyList,unsigned char Position)
 {
 	ELEMENT_TYPE_SINGLE_LIST RetElement = 0;
 
-	if ((HeadNode != NULL) || (Position < HeadNode->Element))
+	if (MyList != NULL)
 	{
-		MySingleList* CurrentNode = HeadNode;
+		MySingleList* CurrentNode = MyList->Next;
 
-		int Current_Position = -1;
-
-		while ((CurrentNode->Next != NULL) && (Current_Position < Position))
+		if (CurrentNode != NULL)
 		{
-			CurrentNode = CurrentNode->Next;
+			/* We are already in the 0th position so, value 0 */
+			int Current_Position = 0;
 
-			Current_Position++;
+			while ((CurrentNode->Next != NULL) && (Current_Position < Position))
+			{
+				CurrentNode = CurrentNode->Next;
+
+				Current_Position++;
+			}
+
+			if (Current_Position == Position)
+			{
+				RetElement = CurrentNode->Element;
+			}
 		}
 
-		RetElement = CurrentNode->Element;
+		else
+		{
+			RetElement = 0;
+		}
 	}
 
 	return RetElement;
 }
 
-unsigned char SingleList_InsertElement(MySingleList* HeadNode, ELEMENT_TYPE_SINGLE_LIST Element, unsigned int Position)
+unsigned char SingleList_InsertElement(MySingleList* MyList, ELEMENT_TYPE_SINGLE_LIST Element, int Position)
 {
 	unsigned char RetVal = 0;
 
-	if ((HeadNode != NULL) || (Position <= HeadNode->Element))
+	if (MyList != NULL)
 	{
 		MySingleList *NewNode = (MySingleList*)malloc(sizeof(MySingleList));
 
 		if (NewNode != NULL)
 		{
-			MySingleList* Temp = HeadNode;
+			MySingleList* CurrentNode = MyList;
 
-			int Current_Position = -1;
+			/* We are in head pointer so, value -1 */
+			int CurrentPosition = -1;
 
-			if (NewNode != NULL)
+			while ((MyList->Next != NULL) && (CurrentPosition < (Position - 1)))
 			{
-				while ((Temp->Next != NULL) && (Current_Position < (Position - 1)))
-				{
-					Temp = Temp->Next;
+				MyList = MyList->Next;
+				CurrentPosition++;
+			}
 
-					Current_Position++;
-				}
-
-				NewNode->Next = Temp->Next;
-
-				Temp->Next = NewNode;
-
-				HeadNode->Element++;
-
+			if (CurrentPosition == (Position - 1))
+			{
+				NewNode->Next = MyList->Next;
+				MyList->Next = NewNode;
+				NewNode->Element = Element;
 				RetVal = 1;
 			}
+			else { free(NewNode); /* Free the element incase of failure. */ }
 		}
 	}
 
 	return RetVal;
 }
 
-ELEMENT_TYPE_SINGLE_LIST SingleList_RemoveElement(MySingleList *HeadNode, unsigned int Position)
+ELEMENT_TYPE_SINGLE_LIST SingleList_RemoveElement(MySingleList * MyList,int Position)
 {
 	ELEMENT_TYPE_SINGLE_LIST RetElement = 0;
 
-	if ((HeadNode != NULL) || (Position < HeadNode->Element))
+	if (MyList != NULL)
 	{
-		MySingleList *CurrentNode = HeadNode;
-
-		MySingleList *PreviousNode;
-
-		int Current_Position = -1;
-
-		while ((CurrentNode->Next != NULL) && (Current_Position < Position))
+		if (MyList->Next != NULL)
 		{
-			PreviousNode = CurrentNode;
+			int CurrentPosition = -1;
 
-			CurrentNode = CurrentNode->Next;
+			while ((MyList->Next != NULL) && (CurrentPosition < (Position - 1)))
+			{
+				MyList = MyList->Next;
+				CurrentPosition++;
+			}
 
-			Current_Position++;
+			if ((CurrentPosition == (Position - 1)) && ((MyList->Next) != NULL))
+			{
+				RetElement = (MyList->Next)->Element;
+				MyList->Next = (MyList->Next)->Next;
+				free(MyList->Next);
+			}
 		}
-
-		//PreviousNode->Next = CurrentNode->Next;
-
-		RetElement = CurrentNode->Element;
-
-		free(CurrentNode);
-
-		HeadNode->Element--;
 	}
 
 	return RetElement;
 }
 
-ELEMENT_TYPE_SINGLE_LIST SingleList_PopElement(MySingleList* HeadNode, unsigned int Position)
+ELEMENT_TYPE_SINGLE_LIST SingleList_PopElement(MySingleList* MyList)
 {
 	ELEMENT_TYPE_SINGLE_LIST RetElement = 0;
 
-	if (HeadNode != NULL)
+	if (MyList != NULL)
 	{
-		MySingleList* CurrentNode = HeadNode;
+		MySingleList* CurrentNode = MyList;
 
-		MySingleList* NextNode = CurrentNode->Next;
-
-		while (NextNode->Next != NULL)
+		if (CurrentNode->Next != NULL)
 		{
-			CurrentNode = CurrentNode->Next;
+			while ((MyList->Next)->Next != NULL)
+			{
+				MyList = MyList->Next;
+			}
 
-			NextNode = CurrentNode->Next;
+			RetElement = ((MyList->Next)->Element);
+			free(MyList->Next);
+			MyList->Next = NULL;
 		}
-
-		CurrentNode->Next = NULL;
-
-		RetElement = NextNode->Element;
-
-		free(NextNode);
-
-		HeadNode->Element--;
 	}
 
 	return RetElement;
+}
+
+void SingleList_Travese(MySingleList* MyList)
+{
+	if (MyList != NULL)
+	{
+		MyList = MyList->Next;
+
+		if (MyList != NULL)
+		{
+			while (MyList != NULL)
+			{
+				printf_s("Element : %d\n", MyList->Element);
+				MyList = MyList->Next;
+			}
+		}
+
+		else
+		{
+			printf_s("Empty List!\n");
+		}
+	}
+
+	else
+	{
+		printf_s("List is not created!\n");
+	}
 }
 
