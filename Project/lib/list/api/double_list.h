@@ -12,7 +12,11 @@ typedef struct _MyDoubleList
 
 extern MyDoubleList* GetMyDoubleList(void);
 
-extern unsigned char DoubleList_PushElement(MyDoubleList* List, DOUBLE_LIST_ELEMENT_TYPE Element);
+extern unsigned char DoubleList_PopElement(MyDoubleList* List, DOUBLE_LIST_ELEMENT_TYPE* Element);
+
+extern unsigned char DoubleList_InsertElement(MyDoubleList* List, DOUBLE_LIST_ELEMENT_TYPE Element, uint32_t Position);
+
+unsigned char DoubleList_RemoveElement(MyDoubleList* List, DOUBLE_LIST_ELEMENT_TYPE* Element, unsigned char Position);
 
 extern void DoubleList_TraverseElement(MyDoubleList* List);
 

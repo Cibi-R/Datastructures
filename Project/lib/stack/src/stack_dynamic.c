@@ -9,10 +9,13 @@ MyStack* Get_MyStack(void)
 {
 	MyStack* NewStack = (MyStack*)malloc(sizeof(MyStack));
 
-	/* Here Head's Element member is used as a length of the stack. */
-	NewStack->Element = 0;
+	if (NULL != NewStack)
+	{
+		/* Here Head's Element member is used as a length of the stack. */
+		NewStack->Element = 0;
 
-	NewStack->Next = NULL;
+		NewStack->Next = NULL;
+	}
 
 	return NewStack;
 }
@@ -21,16 +24,18 @@ void Push_MyStack(MyStack* StackHead, STACK_ELEMENT_TYPE_DYNAMIC Item)
 {
 	MyStack* NewNode = (MyStack*)malloc(sizeof(MyStack));
 
-	NewNode->Element = Item;
-
-	if (StackHead->Next == NULL)
+	if (NULL != NewNode)
 	{
-		NewNode->Next = NULL;
-	}
+		NewNode->Element = Item;
 
-	else
-	{
-		NewNode->Next = StackHead->Next;
+		if (StackHead->Next == NULL)
+		{
+			NewNode->Next = NULL;
+		}
+		else
+		{
+			NewNode->Next = StackHead->Next;
+		}
 	}
 
 	StackHead->Next = NewNode;
@@ -63,8 +68,7 @@ STACK_ELEMENT_TYPE_DYNAMIC Peek_MyStack(MyStack* StackHead)
 
 	if (StackHead->Next != NULL)
 	{
-		MyStack* Top = StackHead->Next;
-		ReturnElement = Top->Element;
+		ReturnElement = (StackHead->Next)->Element;
 	}
 
 	return ReturnElement;

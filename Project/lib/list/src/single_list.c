@@ -63,7 +63,7 @@ ELEMENT_TYPE_SINGLE_LIST SingleList_GetElement(MySingleList* MyList,unsigned cha
 {
 	ELEMENT_TYPE_SINGLE_LIST RetElement = 0;
 
-	if (MyList != NULL)
+	if ((MyList != NULL) && (MyList->Next != NULL))
 	{
 		MySingleList* CurrentNode = MyList->Next;
 

@@ -6,12 +6,16 @@
 #include SINGLE_LISTt_H
 #include CIRCULAR_LISTt_H
 #include BINARY_TREE_H
+#include DOUBLE_LISTt_H
 
 extern void Execute_Tree(void);
 
 int main()
 {
-	Execute_Tree();
+	//Execute_Tree();
+
+	Execute_Double_List();
+
 	while (1);
 }
 

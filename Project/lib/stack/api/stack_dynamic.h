@@ -15,10 +15,10 @@
 typedef struct _MyStack
 {
 	STACK_ELEMENT_TYPE_DYNAMIC Element;
-	struct _MinStack* Next;
+	struct _MyStack* Next;
 } MyStack;
 
-extern unsigned int Stack_Len;
+//extern unsigned int Stack_Len;
 
 extern MyStack* Get_MyStack(void);
 

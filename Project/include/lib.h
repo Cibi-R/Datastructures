@@ -12,6 +12,6 @@
 #define DOUBLE_LIST_H           "lib/list/api/double_list.h"
 #define CIRCULAR_LIST_H         "lib/list/api/circular_list.h"
 
-#define BINARY_TREE_H           "lib/tree/api/binary_tree.h"
+#define BINARY_TREE_H           "lib/tree/binary/api/binary_tree.h"
 
 #endif //__LIBRARY_H__

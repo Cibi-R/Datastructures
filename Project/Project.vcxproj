@@ -88,7 +88,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\Cibi_Learning\ml\Data_Algo\Datastructures\Project;E:\Cibi_Learning\ml\Data_Algo\Datastructures\Project\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\CB Learning\Programming\C\Datastructures\Project\include;D:\CB Learning\Programming\C\Datastructures\Project;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,7 +133,7 @@
     <ClCompile Include="lib\queue\src\queue_dynamic.c" />
     <ClCompile Include="lib\stack\src\stack.c" />
     <ClCompile Include="lib\stack\src\stack_dynamic.c" />
-    <ClCompile Include="lib\tree\src\binary_tree.c" />
+    <ClCompile Include="lib\tree\binary\src\binary_tree.c" />
     <ClCompile Include="src.c" />
     <ClCompile Include="trash\list\src\circular_list_t.c" />
     <ClCompile Include="trash\list\src\double_list_t.c" />
@@ -156,7 +156,7 @@
     <ClInclude Include="lib\queue\api\queue_dynamic.h" />
     <ClInclude Include="lib\stack\api\stack.h" />
     <ClInclude Include="lib\stack\api\stack_dynamic.h" />
-    <ClInclude Include="lib\tree\api\binary_tree.h" />
+    <ClInclude Include="lib\tree\binary\api\binary_tree.h" />
     <ClInclude Include="trash\list\api\circular_list_t.h" />
     <ClInclude Include="trash\list\api\double_list_t.h" />
     <ClInclude Include="trash\list\api\single_list_static_t.h" />

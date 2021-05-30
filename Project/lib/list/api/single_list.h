@@ -24,7 +24,7 @@ typedef struct _MySingleList
  *							                       Function declarations
  ********************************************************************************************************************/
 /*
- *  @brief : This function is used to create the Head Pointer to a list."Next" member is used hold the address 
+ *  @brief : This function is used to create the Head Node to a list."Next" member is used hold the address 
              of the first node in the list.
  *  @param : void.
  *  @return: MySingleList. dynamically created Pointer to a head node.

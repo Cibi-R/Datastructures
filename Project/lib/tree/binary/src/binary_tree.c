@@ -108,3 +108,35 @@ unsigned char MyBTree_FindElement(MyBTree* Tree, BINARY_TREE_ELEMENT_TYPE Elemen
 
 	return IsElementFound;
 }
+
+/*****************************************************************************************************************************
+* Binary Tree:
+* 
+* General Properties of binary tree:
+* 1. In binary tree each node can have at most two chile
+* 2. A node with zero child is called leaf node.
+* 3. First node is called root node, 
+* 4. The condition for binary tree is that a node cannot have more than two child (left child, right child).
+* 5. Strict binary tree is tree where each node can have either 2 or 0 children
+* 6. 
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+* 
+* ****************************************************************************************************************************/
