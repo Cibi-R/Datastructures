@@ -2,6 +2,81 @@
 #include STACK_DYNAMIC_H
 #include STACK_DYNAMICt_H
 
+
+void UnitTest1_MyDynamicStack(void)
+{
+	int option, value1;
+	MyDynamicStack* myStack = NULL;
+
+	printf(" ****************************************************************************************************\n \
+		                        My Dynamic statck Unit Test 1                                           \n \
+****************************************************************************************************\n");
+
+	if (GetMyDynamicStack(&myStack));
+	{
+		while (1)
+		{
+			printf("### Enter the option ###\n1. Push Element\n2. Pop Element\n3. Peek Element\n4. Traverse stack\n");
+			scanf("%d", &option);
+			switch (option)
+			{
+				case 1:
+				{
+					printf("Enter the element : \n");
+					scanf("%d", &value1);
+					if (PushMyDynamicStack(myStack, value1))
+					{
+						printf("Element pushed to the stack : %d\n", value1);
+					}
+					else
+					{
+						printf("Push operation failed\n");
+					}
+					break;
+				}
+
+				case 2:
+				{
+					if (PopMyDynamicStack(myStack, &value1))
+					{
+						printf("Element popped succesfully : %d\n", value1);
+					}
+					else
+					{
+						printf("Failed to pop element\n");
+					}
+					break;
+				}
+
+				case 3:
+				{
+					if (PeekMyDynamicStack(myStack, &value1))
+					{
+						printf("Peek element : %d\n", value1);
+					}
+					else
+					{
+						printf("Failed to get peek element\n");
+					}
+					break;
+				}
+
+				case 4:
+				{
+					TraverseMyDynamicStack(myStack);
+					break;
+				}
+
+				default:
+				{
+					printf("invalid option\n");
+					break;
+				}
+			}
+		}
+	}
+}
+
 /*
  * Get Min Element.
  */
@@ -26,6 +101,7 @@
 //	return RetVal;
 //}
 
+#if 0
 unsigned char isValid(char* s)
 {
 	MyStack *StringStack = Get_MyStack();
@@ -228,3 +304,4 @@ char* removeDuplicates(char* S)
 
 	return S;
 }
+#endif

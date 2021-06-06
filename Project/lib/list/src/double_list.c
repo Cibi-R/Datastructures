@@ -135,6 +135,12 @@ unsigned char DoubleList_InsertElement(MyDoubleList* List, DOUBLE_LIST_ELEMENT_T
 
 			RetVal = 1;
 		}
+
+		else
+		{
+			/*< invalid position */
+			free(NewNode);
+		}
 	}
 
 	return RetVal;

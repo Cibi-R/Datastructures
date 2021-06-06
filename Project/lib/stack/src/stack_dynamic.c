@@ -1,113 +1,141 @@
 #include <include.h>
 #include STACK_DYNAMIC_H
 
-/*
- * In this stack Head stack's element is used to store the size of that particular stack.
- */
 
-MyStack* Get_MyStack(void)
+unsigned char GetMyDynamicStack(MyDynamicStack** MyStack)
 {
-	MyStack* NewStack = (MyStack*)malloc(sizeof(MyStack));
+	unsigned char retval = 0;
 
-	if (NULL != NewStack)
+	*MyStack = (MyDynamicStack*)malloc(sizeof(MyDynamicStack));
+
+	if (*MyStack != NULL)
 	{
-		/* Here Head's Element member is used as a length of the stack. */
-		NewStack->Element = 0;
+		(*MyStack)->Previous = NULL;
+		(*MyStack)->Element = 0;
 
-		NewStack->Next = NULL;
+		retval = 1;
 	}
 
-	return NewStack;
+	return retval;
 }
 
-void Push_MyStack(MyStack* StackHead, STACK_ELEMENT_TYPE_DYNAMIC Item)
+unsigned char PushMyDynamicStack(MyDynamicStack* StackHead, DYNAMIC_STACK_ELEMENT_TYPE ElementValue)
 {
-	MyStack* NewNode = (MyStack*)malloc(sizeof(MyStack));
+	unsigned char retval = 0;
+	MyDynamicStack* NewNode = NULL;
 
-	if (NULL != NewNode)
+	if (StackHead != NULL)
 	{
-		NewNode->Element = Item;
+		NewNode = (MyDynamicStack*)malloc(sizeof(MyDynamicStack));
 
-		if (StackHead->Next == NULL)
+		if (NewNode != NULL)
 		{
-			NewNode->Next = NULL;
+			/*< If StackHead->Previous is null, then the stack is empty */
+			if (StackHead->Previous == NULL)
+			{
+				StackHead->Previous = NewNode;
+
+				/*< first node in the stack */
+				NewNode->Previous = NULL;
+			}
+
+			else
+			{
+				/*< NewNode is the top of the stack, so link previous top node to the NewNode */
+				NewNode->Previous = StackHead->Previous;
+
+				/*< Assign StackHead->Previous to NewNode as this is the top of the stack */
+				StackHead->Previous = NewNode;
+			}
+
+			/*< Load the value */
+			NewNode->Element = ElementValue;
+
+			retval = 1;
+		}
+	}
+
+	return retval;
+}
+
+unsigned char PopMyDynamicStack(MyDynamicStack* StackHead, DYNAMIC_STACK_ELEMENT_TYPE* ElementValue)
+{
+	unsigned char retval = 0;
+	MyDynamicStack* TempNode = NULL;
+
+	if (StackHead != NULL)
+	{
+		/*< stack is empty */
+		if (StackHead->Previous != NULL)
+		{
+			TempNode = StackHead->Previous;
+
+			/*< Last node of the stack */
+			if (TempNode->Previous == NULL)
+			{
+				StackHead->Previous = NULL;
+			}
+			else
+			{
+				/*< Make the StackHead point to previous node of the stack */
+				StackHead->Previous = TempNode->Previous;
+			}
+
+			*ElementValue = TempNode->Element;
+
+			free(TempNode);
+
+			retval = 1;
+		}
+	}
+
+	return retval;
+}
+
+
+unsigned char PeekMyDynamicStack(MyDynamicStack* StackHead, DYNAMIC_STACK_ELEMENT_TYPE* ElementValue)
+{
+	unsigned char retval = 0;
+
+	if (StackHead != NULL)
+	{
+		/*< stack is empty */
+		if (StackHead->Previous != NULL)
+		{
+			*ElementValue = (StackHead->Previous)->Element;
+
+			retval = 1;
+		}
+	}
+
+	return retval;
+}
+
+void TraverseMyDynamicStack(MyDynamicStack* StackHead)
+{
+	MyDynamicStack* TempNode = NULL;
+
+	if (StackHead != NULL)
+	{
+		TempNode = StackHead->Previous;
+
+		if (TempNode != NULL)
+		{
+			do
+			{
+				printf("stack element : %d\n", TempNode->Element);
+
+				TempNode = TempNode->Previous;
+			} while (TempNode != NULL);
 		}
 		else
 		{
-			NewNode->Next = StackHead->Next;
+			printf("stack is empty\n");
 		}
 	}
-
-	StackHead->Next = NewNode;
-
-	/* Stack Head Element : For Stack Length */
-	StackHead->Element++;
-}
-
-STACK_ELEMENT_TYPE_DYNAMIC Pop_MyStack(MyStack* StackHead)
-{
-	STACK_ELEMENT_TYPE_DYNAMIC ReturnElement = 0;
-
-	if (StackHead->Next != NULL)
+	else
 	{
-		MyStack* Delete = StackHead->Next;
-		ReturnElement = Delete->Element;
-		StackHead->Next = Delete->Next;
-		free(Delete);
-		
-		/* Stack Head Element : For Stack Length */
-		StackHead->Element--;
-	}
-
-	return ReturnElement;
-}
-
-STACK_ELEMENT_TYPE_DYNAMIC Peek_MyStack(MyStack* StackHead)
-{
-	STACK_ELEMENT_TYPE_DYNAMIC ReturnElement = 0;
-
-	if (StackHead->Next != NULL)
-	{
-		ReturnElement = (StackHead->Next)->Element;
-	}
-
-	return ReturnElement;
-}
-
-void Traverse_MyStack(MyStack* StackHead)
-{
-	if (StackHead->Next != NULL)
-	{
-		MyStack* Temp = StackHead->Next;
-
-		while (Temp)
-		{
-			printf_s("%c",Temp->Element);
-			Temp = Temp->Next;
-		}
-	}
-}
-
-STACK_ELEMENT_TYPE_DYNAMIC GetSize_MyStack(MyStack* StackHead)
-{
-	return StackHead->Element;
-}
-
-void Delete_MyStack(MyStack* StackHead)
-{
-	if (StackHead->Next != NULL)
-	{
-		MyStack* Current = StackHead->Next;
-		MyStack* Previous = NULL;
-
-		while (Current->Next)
-		{
-			Previous = Current;
-			Current = Current->Next;
-			free(Previous);
-		}
-
-		free(Current);
+		printf("stack is not created\n");
 	}
 }
 

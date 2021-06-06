@@ -1,37 +1,52 @@
 #ifndef __STACK_DYNAMIC_H__
 #define __STACK_DYNAMIC_H__
 
-/*********************************************************************************************************************
- *							                       Preprocessor Constants
- ********************************************************************************************************************/
+#define DYNAMIC_STACK_ELEMENT_TYPE unsigned int
 
-#define STACK_ELEMENT_TYPE_DYNAMIC unsigned int
-
-
- /*********************************************************************************************************************
-  *							                           Typedefinitions
-  ********************************************************************************************************************/
-
-typedef struct _MyStack
+/// <summary>
+/// Structure to hold the data of a node
+/// </summary>
+typedef struct MyDynamicStack_t
 {
-	STACK_ELEMENT_TYPE_DYNAMIC Element;
-	struct _MyStack* Next;
-} MyStack;
+	struct MyDynamicStack_t* Previous;
+	DYNAMIC_STACK_ELEMENT_TYPE Element;
+}MyDynamicStack;
 
-//extern unsigned int Stack_Len;
+/// <summary>
+/// This function dynamically allocates memory for stack head node pointer and assigns the base address to HeadNode argument
+/// </summary>
+/// <param name="MyStack"></param>
+/// <returns></returns>
+extern unsigned char GetMyDynamicStack(MyDynamicStack** MyStack);
 
-extern MyStack* Get_MyStack(void);
+/// <summary>
+/// This function push the data to the stack
+/// </summary>
+/// <param name="StackHead"></param>
+/// <param name="ElementValue"></param>
+/// <returns>0 on failure, 1 on success</returns>
+extern unsigned char PushMyDynamicStack(MyDynamicStack* StackHead, DYNAMIC_STACK_ELEMENT_TYPE ElementValue);
 
-extern void Push_MyStack(MyStack* StackHead, STACK_ELEMENT_TYPE_DYNAMIC x);
+/// <summary>
+/// This function pops the data from the stack
+/// </summary>
+/// <param name="StackHead"></param>
+/// <param name="ElementValue"></param>
+/// <returns>0 on failure, 1 on success</returns>
+extern unsigned char PopMyDynamicStack(MyDynamicStack* StackHead, DYNAMIC_STACK_ELEMENT_TYPE* ElementValue);
 
-extern STACK_ELEMENT_TYPE_DYNAMIC Pop_MyStack(MyStack* StackHead);
+/// <summary>
+/// This function returns the peek element of the stack, it will not remove the element
+/// </summary>
+/// <param name="StackHead"></param>
+/// <param name="ElementValue"></param>
+/// <returns>0 on failure, 1 on success</returns>
+extern unsigned char PeekMyDynamicStack(MyDynamicStack* StackHead, DYNAMIC_STACK_ELEMENT_TYPE* ElementValue);
 
-extern STACK_ELEMENT_TYPE_DYNAMIC Peek_MyStack(MyStack* StackHead);
-
-extern void Traverse_MyStack(MyStack* StackHead);
-
-extern STACK_ELEMENT_TYPE_DYNAMIC GetSize_MyStack(MyStack* StackHead);
-
-extern void Delete_MyStack(MyStack* StackHead);
+/// <summary>
+/// This function traverse the stack
+/// </summary>
+/// <param name="StackHead"></param>
+extern void TraverseMyDynamicStack(MyDynamicStack* StackHead);
 
 #endif //__STACK_DYNAMIC_H__

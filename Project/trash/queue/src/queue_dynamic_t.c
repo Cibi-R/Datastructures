@@ -1,39 +1,72 @@
 #include <include.h>
 #include QUEUE_DYNAMIC_H
 
-
-void Execute_MyQueue(void)
+void UnitTest1_MyDynamicQueue(void)
 {
-	unsigned int Option;
+	int option, value1;
+	MyDynamicQueue* myQueue = NULL;
 
-	MyQueue* NewQueue;
+	printf(" ****************************************************************************************************\n \
+		                        My Dynamic Queue Unit Test 1                                          \n \
+****************************************************************************************************\n");
 
-	NewQueue = GetMyQueue();
-
-	while (1)
+	if (GetMyDynamicQueue(&myQueue));
 	{
-		printf_s("1. Enqueue\n2. Dequeue\n3. Peek\n4. Traverse\n");
-		scanf_s("%d", &Option);
-
-		switch (Option)
+		while (1)
 		{
-		case 1:
-			printf("Enter the Element:");
-			scanf_s("%d", &Option);
-			(MyQueue_Enqueue(NewQueue,Option)) ? printf_s("Element Enqueued Successfully!\n") : printf_s("Enqueue Operation failed!\n");
-			break;
-
-		case 2:
-			printf("Dequeued Element : %d\n", MyQueue_Dequeue(NewQueue));
-			break;
-
-		case 3:
-			//printf("Peek Element : %d\n", Stack_Peek());
-			break;
-
-		case 4:
-			MyQueue_Traverse(NewQueue);
-			break;
+			printf("### Enter the option ###\n1. Enqueue Element\n2. Dequeue Element\n3. Peek Element\n4. Traverse queue\n");
+			scanf("%d", &option);
+			switch (option)
+			{
+				case 1:
+				{
+					printf("Enter the element : \n");
+					scanf("%d", &value1);
+					if (EnQueueMyDynamicQueue(myQueue, value1))
+					{
+						printf("Element enqueued to the queue : %d\n", value1);
+					}
+					else
+					{
+						printf("enqueue operation failed\n");
+					}
+					break;
+				}
+				case 2:
+				{
+					if (DeQueueMyDynamicQueue(myQueue, &value1))
+					{
+						printf("Element De-Queued succesfully : %d\n", value1);
+					}
+					else
+					{
+						printf("Failed to de-queue element\n");
+					}
+					break;
+				}
+				case 3:
+				{
+					if (PeekMyDynamicQueue(myQueue, &value1))
+					{
+						printf("Peek element : %d\n", value1);
+					}
+					else
+					{
+						printf("Failed to get peek element\n");
+					}
+					break;
+				}
+				case 4:
+				{
+					TraverseMyDynamicQueue(myQueue);
+					break;
+				}
+				default:
+				{
+					printf("invalid option\n");
+					break;
+				}
+			}
 		}
 	}
 }

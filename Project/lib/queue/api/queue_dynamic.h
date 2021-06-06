@@ -1,20 +1,52 @@
 #ifndef __QUEUE_DYNAMIC_H__
 #define __QUEUE_DYNAMIC_H__
 
-#define QUEUE_ELEMENT_TYPE_DYNAMIC int
+#define DYNAMIC_QUEUE_ELEMENT int
 
-typedef struct _MyQueue
+/// <summary>
+/// Structure to hold the data of a node
+/// </summary>
+typedef struct MyDynamicQueue_Tag
 {
-	QUEUE_ELEMENT_TYPE_DYNAMIC Element;
-	struct _MyQueue *Next;
-}MyQueue;
+	struct MyDynamicQueue_Tag* next;
+	DYNAMIC_QUEUE_ELEMENT QueueElement;
+}MyDynamicQueue;
 
-extern MyQueue* GetMyQueue(void);
+/// <summary>
+/// This function dynamically allocates memory for queue head node pointer and assigns the base address to HeadNode argument
+/// </summary>
+/// <param name="HeadNode"></param>
+/// <returns>0 on failure, 1 on success</returns>
+unsigned char GetMyDynamicQueue(MyDynamicQueue* HeadNode);
 
-extern unsigned char MyQueue_Enqueue(MyQueue* HeadNode, QUEUE_ELEMENT_TYPE_DYNAMIC Element);
+/// <summary>
+/// This function enqueue data to the queue
+/// </summary>
+/// <param name="HeadNode"></param>
+/// <param name="Element"></param>
+/// <returns>0 on failure, 1 on success</returns>
+unsigned char EnQueueMyDynamicQueue(MyDynamicQueue* HeadNode, DYNAMIC_QUEUE_ELEMENT Element);
 
-extern QUEUE_ELEMENT_TYPE_DYNAMIC MyQueue_Dequeue(MyQueue* HeadNode);
+/// <summary>
+/// This funtion dequeues data from the queue
+/// </summary>
+/// <param name="HeadNode"></param>
+/// <param name="Element"></param>
+/// <returns>0 on failure, 1 on success</returns>
+unsigned char DeQueueMyDynamicQueue(MyDynamicQueue* HeadNode, DYNAMIC_QUEUE_ELEMENT* Element);
 
-extern void MyQueue_Traverse(MyQueue* HeadNode);
+/// <summary>
+/// This function returns the peek element of the queue, it will not remove the element
+/// </summary>
+/// <param name="HeadNode"></param>
+/// <param name="Element"></param>
+/// <returns>0 on failure, 1 on success</returns>
+unsigned char PeekMyDynamicQueue(MyDynamicQueue* HeadNode, DYNAMIC_QUEUE_ELEMENT* Element);
 
-#endif
+/// <summary>
+/// This function traverse the queue
+/// </summary>
+/// <param name="HeadNode"></param>
+void TraverseMyDynamicQueue(MyDynamicQueue* HeadNode);
+
+#endif //__QUEUE_DYNAMIC_H__
