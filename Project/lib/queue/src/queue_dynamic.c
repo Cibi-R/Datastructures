@@ -1,112 +1,140 @@
 #include <include.h>
 #include QUEUE_DYNAMIC_H
 
-unsigned char GetMyDynamicQueue(MyDynamicQueue** HeadNode)
+unsigned char MyDynamicQueue_Create(MyDynamicQueue** HeadNode, uint16_t ElementSize)
 {
-	unsigned char retval = 0;
+	unsigned char retVal = 0;
 
 	*HeadNode = (MyDynamicQueue*)malloc(sizeof(MyDynamicQueue));
 
 	if (*HeadNode != NULL)
 	{
 		(*HeadNode)->next = NULL;
-		(*HeadNode)->QueueElement = 0;
 
-		retval = 1;
+		/*< QueueElement member of the MyDynamicQueue is used to store size of the Queue eleement */
+		(*HeadNode)->QueueElement = ElementSize;
+
+		retVal = 1;
 	}
 
-	return retval;
+	return retVal;
 }
 
-unsigned char EnQueueMyDynamicQueue(MyDynamicQueue* HeadNode, DYNAMIC_QUEUE_ELEMENT Element)
+unsigned char MyDynamicQueue_EnQueue(MyDynamicQueue* HeadNode, void* QueueElement)
 {
-	unsigned char retval = 0;
+	unsigned char retVal = 0;
 
-	MyDynamicQueue* TempNode = NULL;
-	MyDynamicQueue* NewNode = NULL;
+	MyDynamicQueue*  newNode = NULL;
 
-	NewNode = (MyDynamicQueue*)malloc(sizeof(MyDynamicQueue));
-
-	if ((HeadNode != NULL) && (NewNode != NULL))
+	if (NULL != HeadNode)
 	{
-		/*< the logic will work even when the queue is empty, In queue the headnode pointer will be pointing to the first node */
-		TempNode = HeadNode;
+		newNode = (MyDynamicQueue*)malloc(sizeof(MyDynamicQueue));
 
-		while (TempNode->next != NULL)
+		if (NULL != newNode)
 		{
-			TempNode = TempNode->next;
+			char* queueData = (char*)malloc(HeadNode->QueueElement);
+
+			if (NULL != queueData)
+			{
+				memcpy(queueData, QueueElement, HeadNode->QueueElement);
+
+				newNode->QueueElement = (void*) queueData;
+				newNode->next = NULL;
+
+				/* so far queue element has been created and value is stored to the queue element */
+
+				if (NULL == HeadNode->next)
+				{
+					HeadNode->next = newNode;
+				}
+				else
+				{
+					MyDynamicQueue* tempNode = HeadNode->next;
+
+					while (NULL != tempNode->next)
+					{
+						tempNode = tempNode->next;
+					}
+
+					tempNode->next = newNode;
+				}
+
+				retVal = 1;
+			}
 		}
-
-		TempNode->next = NewNode;
-
-		NewNode->QueueElement = Element;
-		NewNode->next = NULL;
-
-		retval = 1;
 	}
 
-	return retval;
+	return retVal;
 }
 
-unsigned char DeQueueMyDynamicQueue(MyDynamicQueue* HeadNode, DYNAMIC_QUEUE_ELEMENT* Element)
+unsigned char MyDynamicQueue_DeQueue(MyDynamicQueue* HeadNode, void* QueueElement)
 {
-	unsigned char retval = 0;
+	unsigned char retVal = 0;
 
-	MyDynamicQueue* TempNode;
+	MyDynamicQueue* tempNode = NULL;
 
 	if (HeadNode != NULL)
 	{
 		if (HeadNode->next != NULL)
 		{
 			/*< this logic will work even if there is only one node in the queue */
-			TempNode = HeadNode->next;
+			tempNode = HeadNode->next;
 
-			HeadNode->next = TempNode->next;
+			HeadNode->next = tempNode->next;
 
-			*Element = TempNode->QueueElement;
+			memcpy(QueueElement, tempNode->QueueElement, HeadNode->QueueElement);
 
-			free(TempNode);
+			/*< free the memory allocated to the queue data element */
+			free(tempNode->QueueElement);
 
-			retval = 1;
+			/*< free the memory allocated to the queue node */
+			free(tempNode);
+
+			retVal = 1;
 		}
 	}
 
-	return retval;
+	return retVal;
 }
 
-unsigned char PeekMyDynamicQueue(MyDynamicQueue* HeadNode, DYNAMIC_QUEUE_ELEMENT* Element)
+unsigned char MyDynamicQueue_Peek(MyDynamicQueue* HeadNode, void* QueueElement)
 {
-	unsigned char retval = 0;
+	unsigned char retVal = 0;
+
+	MyDynamicQueue* tempNode;
 
 	if (HeadNode != NULL)
 	{
 		if (HeadNode->next != NULL)
 		{
-			*Element = (HeadNode->next)->QueueElement;
+			tempNode = HeadNode->next;
 
-			retval = 1;
+			memcpy(QueueElement, tempNode->QueueElement, HeadNode->QueueElement);
+
+			retVal = 1;
 		}
 	}
 
-	return retval;
+	return retVal;
 }
 
-void TraverseMyDynamicQueue(MyDynamicQueue* HeadNode)
+void MyDynamicQueue_Traverse(MyDynamicQueue* HeadNode)
 {
-	MyDynamicQueue* TempNode = NULL;
+	MyDynamicQueue* tempNode = NULL;
 
 	if (HeadNode != NULL)
 	{
 		if (HeadNode->next != NULL)
 		{
-			TempNode = HeadNode->next;
+			tempNode = HeadNode->next;
 
 			do
 			{
-				printf("Element : %d\n", TempNode->QueueElement);
+				printf("queue element : %d\n", *((unsigned int*)tempNode->QueueElement));
 
-				TempNode = TempNode->next;
-			} while (TempNode != NULL);
+				tempNode = tempNode->next;
+
+			} while (tempNode != NULL);
 		}
 	}
 }

@@ -3,14 +3,15 @@
 
 void UnitTest1_MyDynamicQueue(void)
 {
-	int option, value1;
+	unsigned int option, value1;
+
 	MyDynamicQueue* myQueue = NULL;
 
 	printf(" ****************************************************************************************************\n \
 		                        My Dynamic Queue Unit Test 1                                          \n \
 ****************************************************************************************************\n");
 
-	if (GetMyDynamicQueue(&myQueue));
+	if (MyDynamicQueue_Create(&myQueue, sizeof(unsigned int)))
 	{
 		while (1)
 		{
@@ -22,7 +23,8 @@ void UnitTest1_MyDynamicQueue(void)
 				{
 					printf("Enter the element : \n");
 					scanf("%d", &value1);
-					if (EnQueueMyDynamicQueue(myQueue, value1))
+
+					if (MyDynamicQueue_EnQueue(myQueue, (void*)&value1))
 					{
 						printf("Element enqueued to the queue : %d\n", value1);
 					}
@@ -34,7 +36,7 @@ void UnitTest1_MyDynamicQueue(void)
 				}
 				case 2:
 				{
-					if (DeQueueMyDynamicQueue(myQueue, &value1))
+					if (MyDynamicQueue_DeQueue(myQueue, (void*)&value1))
 					{
 						printf("Element De-Queued succesfully : %d\n", value1);
 					}
@@ -46,7 +48,7 @@ void UnitTest1_MyDynamicQueue(void)
 				}
 				case 3:
 				{
-					if (PeekMyDynamicQueue(myQueue, &value1))
+					if (MyDynamicQueue_Peek(myQueue, (void*)&value1))
 					{
 						printf("Peek element : %d\n", value1);
 					}
@@ -58,7 +60,7 @@ void UnitTest1_MyDynamicQueue(void)
 				}
 				case 4:
 				{
-					TraverseMyDynamicQueue(myQueue);
+					MyDynamicQueue_Traverse(myQueue);
 					break;
 				}
 				default:

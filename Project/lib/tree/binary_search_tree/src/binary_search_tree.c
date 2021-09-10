@@ -1,5 +1,5 @@
 #include <include.h>
-#include BINARY_TREE_H
+#include BINARY_SEARCH_TREE_H
 
 
 MyBTree* GetMyBTree(void)

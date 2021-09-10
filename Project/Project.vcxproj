@@ -130,11 +130,11 @@
     <ClCompile Include="lib\list\src\double_list.c" />
     <ClCompile Include="lib\list\src\single_list.c" />
     <ClCompile Include="lib\list\src\single_list_static.c" />
-    <ClCompile Include="lib\queue\src\queue.c" />
+    <ClCompile Include="lib\queue\src\queue_static.c" />
     <ClCompile Include="lib\queue\src\queue_dynamic.c" />
     <ClCompile Include="lib\stack\src\stack.c" />
     <ClCompile Include="lib\stack\src\stack_dynamic.c" />
-    <ClCompile Include="lib\tree\binary\src\binary_tree.c" />
+    <ClCompile Include="lib\tree\binary_search_tree\src\binary_search_tree.c" />
     <ClCompile Include="src.c" />
     <ClCompile Include="trash\list\src\circular_list_t.c" />
     <ClCompile Include="trash\list\src\double_list_t.c" />
@@ -153,11 +153,11 @@
     <ClInclude Include="lib\list\api\double_list.h" />
     <ClInclude Include="lib\list\api\single_list.h" />
     <ClInclude Include="lib\list\api\single_list_static.h" />
-    <ClInclude Include="lib\queue\api\queue.h" />
+    <ClInclude Include="lib\queue\api\queue_static.h" />
     <ClInclude Include="lib\queue\api\queue_dynamic.h" />
     <ClInclude Include="lib\stack\api\stack.h" />
     <ClInclude Include="lib\stack\api\stack_dynamic.h" />
-    <ClInclude Include="lib\tree\binary\api\binary_tree.h" />
+    <ClInclude Include="lib\tree\binary_search_tree\api\binary_search_tree.h" />
     <ClInclude Include="trash\list\api\circular_list_t.h" />
     <ClInclude Include="trash\list\api\double_list_t.h" />
     <ClInclude Include="trash\list\api\single_list_static_t.h" />
@@ -166,8 +166,8 @@
     <ClInclude Include="trash\queue\api\queue_t.h" />
     <ClInclude Include="trash\stack\api\stack_dynamic_t.h" />
     <ClInclude Include="trash\stack\api\stack_t.h" />
-    <ClInclude Include="trash\tree\api\binary_tree_t.h" />
-    <ClInclude Include="trash\tree\src\binary_tree_t.c" />
+    <ClInclude Include="trash\tree\api\binary_search_tree_t.h" />
+    <ClInclude Include="trash\tree\src\binary_search_tree_t.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

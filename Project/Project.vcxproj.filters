@@ -30,9 +30,6 @@
     <ClCompile Include="trash\stack\src\stack_dynamic_t.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lib\queue\src\queue.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="lib\queue\src\queue_dynamic.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -66,7 +63,10 @@
     <ClCompile Include="lib\list\src\single_list_static.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lib\tree\binary\src\binary_tree.c">
+    <ClCompile Include="lib\tree\binary_search_tree\src\binary_search_tree.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\queue\src\queue_static.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -90,9 +90,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="trash\stack\api\stack_dynamic_t.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lib\queue\api\queue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\queue\api\queue_dynamic.h">
@@ -128,13 +125,16 @@
     <ClInclude Include="lib\list\api\single_list_static.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="trash\tree\api\binary_tree_t.h">
+    <ClInclude Include="lib\tree\binary_search_tree\api\binary_search_tree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="trash\tree\src\binary_tree_t.c">
+    <ClInclude Include="trash\tree\src\binary_search_tree_t.c">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lib\tree\binary\api\binary_tree.h">
+    <ClInclude Include="trash\tree\api\binary_search_tree_t.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\queue\api\queue_static.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

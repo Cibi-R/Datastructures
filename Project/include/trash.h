@@ -12,6 +12,6 @@
 #define DOUBLE_LISTt_H             "trash/list/api/double_list_t.h"
 #define CIRCULAR_LISTt_H           "trash/list/api/circular_list_t.h"
 
-#define BINARY_TREEt_H             "trash/tree/api/binary_tree_t.h"
+#define BINARY_SEARCH_TREEt_H             "trash/tree/api/binary_search_tree_t.h"
 
 #endif //__TRASH_H__
