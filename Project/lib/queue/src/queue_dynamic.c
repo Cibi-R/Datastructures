@@ -32,11 +32,11 @@ unsigned char MyDynamicQueue_EnQueue(MyDynamicQueue* HeadNode, void* QueueElemen
 
 		if (NULL != newNode)
 		{
-			char* queueData = (char*)malloc(HeadNode->QueueElement);
+			char* queueData = (char*)malloc((unsigned int)HeadNode->QueueElement);
 
 			if (NULL != queueData)
 			{
-				memcpy(queueData, QueueElement, HeadNode->QueueElement);
+				memcpy(queueData, QueueElement, (unsigned int)HeadNode->QueueElement);
 
 				newNode->QueueElement = (void*) queueData;
 				newNode->next = NULL;
@@ -61,6 +61,11 @@ unsigned char MyDynamicQueue_EnQueue(MyDynamicQueue* HeadNode, void* QueueElemen
 
 				retVal = 1;
 			}
+			else
+			{
+				/*< free memory for newNode if memory allocation fails for element */
+				free(newNode);
+			}
 		}
 	}
 
@@ -82,7 +87,7 @@ unsigned char MyDynamicQueue_DeQueue(MyDynamicQueue* HeadNode, void* QueueElemen
 
 			HeadNode->next = tempNode->next;
 
-			memcpy(QueueElement, tempNode->QueueElement, HeadNode->QueueElement);
+			memcpy(QueueElement, tempNode->QueueElement, (unsigned int)HeadNode->QueueElement);
 
 			/*< free the memory allocated to the queue data element */
 			free(tempNode->QueueElement);
@@ -109,7 +114,7 @@ unsigned char MyDynamicQueue_Peek(MyDynamicQueue* HeadNode, void* QueueElement)
 		{
 			tempNode = HeadNode->next;
 
-			memcpy(QueueElement, tempNode->QueueElement, HeadNode->QueueElement);
+			memcpy(QueueElement, tempNode->QueueElement, (unsigned int)HeadNode->QueueElement);
 
 			retVal = 1;
 		}

@@ -1,5 +1,5 @@
 #include <include.h>
-#include STACKt_H
+#include STACK_STATICt_H
 #include STACK_DYNAMICt_H
 #include QUEUE_DYNAMICt_H
 #include SINGLE_LIST_STATICt_H
@@ -12,13 +12,25 @@ extern void Execute_Tree(void);
 
 int main()
 {
+	/*< static queue unit test */
 #if 0
 	UnitTest1_MyStaticQueue();
 #endif
-#if 1
+
+	/*< dynamic queue unit test */
+#if 0
 	UnitTest1_MyDynamicQueue();
 #endif
-	//Execute_Tree();
+
+	/*< static stack unit test */
+#if 1
+	UnitTest1_MyStaticStack();
+#endif 
+
+	/*< dynamci queue unit test */
+#if 0
+	UnitTest1_MyDynamicStack();
+#endif
 
 	//Execute_Double_List();
 

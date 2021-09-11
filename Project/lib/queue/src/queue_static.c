@@ -110,7 +110,7 @@ void MyStaticQueue_Traverse(MyQueueStatic* MyQueue)
 {
 	int16_t i = MyQueue->front;
 
-	if (IsQueueEmpty(&MyQueue))
+	if (IsQueueEmpty(MyQueue))
 	{
 		printf("queue is empty...\n");
 	}

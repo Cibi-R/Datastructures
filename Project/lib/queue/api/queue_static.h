@@ -29,7 +29,7 @@ typedef struct MyQueueStatic_Tag
    *  @return: MySingleList. dynamically created Pointer to a head node.
    */
 
-void MyStaticQueue_Init(MyQueueStatic *MyQueue);
+extern void MyStaticQueue_Init(MyQueueStatic *MyQueue);
 
 /**
  *  @brief : This function is used to enqueue an element to the queue
@@ -37,7 +37,7 @@ void MyStaticQueue_Init(MyQueueStatic *MyQueue);
  *  @return: uint8_t - Status of Enqueue operation
  */
 
-uint8_t MyStaticQueue_EnQueue(MyQueueStatic* MyQueue, QUEUE_STATIC_ELEMENT_TYPE Element);
+extern uint8_t MyStaticQueue_EnQueue(MyQueueStatic* MyQueue, QUEUE_STATIC_ELEMENT_TYPE Element);
 
 /**
  *  @brief : This function is used to dequeue element from the list.
@@ -45,7 +45,7 @@ uint8_t MyStaticQueue_EnQueue(MyQueueStatic* MyQueue, QUEUE_STATIC_ELEMENT_TYPE 
  *  @return: uint8_t - Status of Dequeue operation
  */
 
-uint8_t MyStaticQueue_DeQueue(MyQueueStatic* MyQueue, QUEUE_STATIC_ELEMENT_TYPE* Element);
+extern uint8_t MyStaticQueue_DeQueue(MyQueueStatic* MyQueue, QUEUE_STATIC_ELEMENT_TYPE* Element);
 
 /**
  *  @brief : This function is used to get the peek element of the queue
@@ -53,7 +53,7 @@ uint8_t MyStaticQueue_DeQueue(MyQueueStatic* MyQueue, QUEUE_STATIC_ELEMENT_TYPE*
  *  @return: uint8_t - Status of peek operation
  */
 
-uint8_t MyStaticQueue_Peek(MyQueueStatic* MyQueue, QUEUE_STATIC_ELEMENT_TYPE* Element);
+extern uint8_t MyStaticQueue_Peek(MyQueueStatic* MyQueue, QUEUE_STATIC_ELEMENT_TYPE* Element);
 
 /**
  *  @brief : This function is used to travese the queue.
@@ -61,7 +61,7 @@ uint8_t MyStaticQueue_Peek(MyQueueStatic* MyQueue, QUEUE_STATIC_ELEMENT_TYPE* El
  *  @return: void
  */
 
-void MyStaticQueue_Traverse(MyQueueStatic* MyQueue);
+extern void MyStaticQueue_Traverse(MyQueueStatic* MyQueue);
 
 
 

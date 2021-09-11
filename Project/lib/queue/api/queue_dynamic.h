@@ -18,7 +18,7 @@ typedef struct MyDynamicQueue_Tag
 /// <param name="HeadNode - pointer to the head node"></param>
 /// <param name="ElementSize - size of the queue element"></param>
 /// <returns>0 on failure, 1 on success</returns>
-unsigned char MyDynamicQueue_Create(MyDynamicQueue** HeadNode, uint16_t ElementSize);
+extern unsigned char MyDynamicQueue_Create(MyDynamicQueue** HeadNode, uint16_t ElementSize);
 
 /// <summary>
 /// this function is used to enqueue the data to the queue
@@ -26,7 +26,7 @@ unsigned char MyDynamicQueue_Create(MyDynamicQueue** HeadNode, uint16_t ElementS
 /// <param name="HeadNode - Pointer to the Dynamic queue" ></param>
 /// <param name="QueueElement - Pointer to the data where enqueued data will be stored"></param>
 /// <returns>0 on failure, 1 on success</returns>
-unsigned char MyDynamicQueue_EnQueue(MyDynamicQueue* HeadNode, void* QueueElement);
+extern unsigned char MyDynamicQueue_EnQueue(MyDynamicQueue* HeadNode, void* QueueElement);
 
 /// <summary>
 /// this function is used to dequeue the data from the queue
@@ -34,7 +34,7 @@ unsigned char MyDynamicQueue_EnQueue(MyDynamicQueue* HeadNode, void* QueueElemen
 /// <param name="HeadNode - Pointer to the Dynamic queue"></param>
 /// <param name="QueueElement - Pointer to the data where dequeued data will be stored"></param>
 /// <returns>0 on failure, 1 on success</returns>
-unsigned char MyDynamicQueue_DeQueue(MyDynamicQueue* HeadNode, void* QueueElement);
+extern unsigned char MyDynamicQueue_DeQueue(MyDynamicQueue* HeadNode, void* QueueElement);
 
 /// <summary>
 /// This function returns the peek element of the queue, it will not remove the element
@@ -42,12 +42,12 @@ unsigned char MyDynamicQueue_DeQueue(MyDynamicQueue* HeadNode, void* QueueElemen
 /// <param name="HeadNode - Pointer to the Dynamic queue"></param>
 /// <param name="QueueElement - Pointer to the data where peek element will be stored"></param>
 /// <returns>0 on failure, 1 on success</returns>
-unsigned char MyDynamicQueue_Peek(MyDynamicQueue* HeadNode, void* QueueElement);
+extern unsigned char MyDynamicQueue_Peek(MyDynamicQueue* HeadNode, void* QueueElement);
 
 /// <summary>
 /// This function traverse the queue
 /// </summary>
 /// <param name="HeadNode"></param>
-void MyDynamicQueue_Traverse(MyDynamicQueue* HeadNode);
+extern void MyDynamicQueue_Traverse(MyDynamicQueue* HeadNode);
 
 #endif //__QUEUE_DYNAMIC_H__

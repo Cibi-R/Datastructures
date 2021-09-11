@@ -18,12 +18,6 @@
     <ClCompile Include="src.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lib\stack\src\stack.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="trash\stack\src\stack_t.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="lib\stack\src\stack_dynamic.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -69,14 +63,14 @@
     <ClCompile Include="lib\queue\src\queue_static.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lib\stack\src\stack_static.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="trash\stack\src\stack_static_t.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="lib\stack\api\stack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="trash\stack\api\stack_t.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\include.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -135,6 +129,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lib\queue\api\queue_static.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\stack\api\stack_static.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="trash\stack\api\stack_static_t.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

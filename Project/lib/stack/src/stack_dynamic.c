@@ -2,131 +2,137 @@
 #include STACK_DYNAMIC_H
 
 
-unsigned char GetMyDynamicStack(MyDynamicStack** MyStack)
+unsigned char MyDynamicStack_Create(MyDynamicStack** HeadNode, uint16_t ElementSize)
 {
-	unsigned char retval = 0;
+	unsigned char retVal = 0;
 
-	*MyStack = (MyDynamicStack*)malloc(sizeof(MyDynamicStack));
+	*HeadNode = (MyDynamicStack*)malloc(sizeof(MyDynamicStack));
 
-	if (*MyStack != NULL)
+	if (NULL != HeadNode)
 	{
-		(*MyStack)->Previous = NULL;
-		(*MyStack)->Element = 0;
+		(*HeadNode)->Previous = NULL;
 
-		retval = 1;
+		/*< store the size of the stack element to "Element" member of the dynamic stack Head pointer, even though it is 
+		    void pointer variable we will store the eleemnt size, and we will access the "Element" pointer variable of the 
+			HeadNode as a integer value */
+		(*HeadNode)->Element = (void*)ElementSize;
+
+		retVal = 1;
 	}
 
-	return retval;
+	return retVal;
 }
 
-unsigned char PushMyDynamicStack(MyDynamicStack* StackHead, DYNAMIC_STACK_ELEMENT_TYPE ElementValue)
+unsigned char MyDynamicStack_Push(MyDynamicStack* HeadNode, void* StackElement)
 {
-	unsigned char retval = 0;
-	MyDynamicStack* NewNode = NULL;
+	unsigned char retVal = 0;
 
-	if (StackHead != NULL)
+	MyDynamicStack* newNode = NULL;
+
+	if (HeadNode != NULL)
 	{
-		NewNode = (MyDynamicStack*)malloc(sizeof(MyDynamicStack));
+		newNode = (MyDynamicStack*)malloc(sizeof(MyDynamicStack));
 
-		if (NewNode != NULL)
+		if (NULL != newNode)
 		{
-			/*< If StackHead->Previous is null, then the stack is empty */
-			if (StackHead->Previous == NULL)
+			newNode->Element = (void*)malloc((unsigned int)HeadNode->Element);
+
+			if (NULL != newNode->Element)
 			{
-				StackHead->Previous = NewNode;
+				/*< store the element value */
+				memcpy(newNode->Element, StackElement, (unsigned int)HeadNode->Element);
 
-				/*< first node in the stack */
-				NewNode->Previous = NULL;
-			}
+				/*< HeadNode->Previous will always point to the top of the stack, it could be null or valid element */
+				newNode->Previous = HeadNode->Previous;
 
-			else
-			{
-				/*< NewNode is the top of the stack, so link previous top node to the NewNode */
-				NewNode->Previous = StackHead->Previous;
+				/*< newly created node is the top of the stack, so store the new node to HeadNode->Previous */
+				HeadNode->Previous = newNode;
 
-				/*< Assign StackHead->Previous to NewNode as this is the top of the stack */
-				StackHead->Previous = NewNode;
-			}
-
-			/*< Load the value */
-			NewNode->Element = ElementValue;
-
-			retval = 1;
-		}
-	}
-
-	return retval;
-}
-
-unsigned char PopMyDynamicStack(MyDynamicStack* StackHead, DYNAMIC_STACK_ELEMENT_TYPE* ElementValue)
-{
-	unsigned char retval = 0;
-	MyDynamicStack* TempNode = NULL;
-
-	if (StackHead != NULL)
-	{
-		/*< stack is empty */
-		if (StackHead->Previous != NULL)
-		{
-			TempNode = StackHead->Previous;
-
-			/*< Last node of the stack */
-			if (TempNode->Previous == NULL)
-			{
-				StackHead->Previous = NULL;
+				retVal = 1;
 			}
 			else
 			{
-				/*< Make the StackHead point to previous node of the stack */
-				StackHead->Previous = TempNode->Previous;
+				/*< if free fails while createing Element clear the NewNode pointer else it will result in memory leak */
+				free(newNode);
 			}
-
-			*ElementValue = TempNode->Element;
-
-			free(TempNode);
-
-			retval = 1;
 		}
 	}
 
-	return retval;
+	return retVal;
 }
 
-
-unsigned char PeekMyDynamicStack(MyDynamicStack* StackHead, DYNAMIC_STACK_ELEMENT_TYPE* ElementValue)
+unsigned char MyDynamicStack_Pop(MyDynamicStack* HeadNode, void* StackElement)
 {
-	unsigned char retval = 0;
+	unsigned char retVal = 0;
 
-	if (StackHead != NULL)
+	MyDynamicStack* tempNode = NULL;
+
+	if (HeadNode != NULL)
 	{
-		/*< stack is empty */
-		if (StackHead->Previous != NULL)
+		/*< HeadNode->Previous will always point to the top of the stack */
+		tempNode = HeadNode->Previous;
+
+		if (NULL != tempNode)
 		{
-			*ElementValue = (StackHead->Previous)->Element;
+			/*< tempNode->Previous will be the next top element of the stack */
+			HeadNode->Previous = tempNode->Previous;
 
-			retval = 1;
+			/*< copy the top element of the stack */
+			memcpy(StackElement, tempNode->Element, (unsigned int)HeadNode->Element);
+
+			/*< free the stack element */
+			free(tempNode->Element);
+
+			/*< free the stack node */
+			free(tempNode);
+
+			retVal = 1;
 		}
 	}
 
-	return retval;
+	return retVal;
 }
 
-void TraverseMyDynamicStack(MyDynamicStack* StackHead)
+
+unsigned char MyDynamicStack_Peek(MyDynamicStack* HeadNode, void* StackElement)
 {
-	MyDynamicStack* TempNode = NULL;
+	unsigned char retVal = 0;
 
-	if (StackHead != NULL)
+	if (HeadNode != NULL)
 	{
-		TempNode = StackHead->Previous;
+		/*< check whether the stack is empty */
+		if (HeadNode->Previous != NULL)
+		{
+			memcpy(StackElement, HeadNode->Previous->Element, (unsigned int)HeadNode->Element);
 
-		if (TempNode != NULL)
+			retVal = 1;
+		}
+	}
+
+	return retVal;
+}
+
+void MyDynamicStack_Traverse(MyDynamicStack* HeadNode)
+{
+	unsigned int tempValue = 0;
+
+	MyDynamicStack* tempNode = NULL;
+
+	if (HeadNode != NULL)
+	{
+		tempNode = HeadNode->Previous;
+
+		if (tempNode != NULL)
 		{
 			do
 			{
-				printf("stack element : %d\n", TempNode->Element);
+				memcpy(&tempValue, tempNode->Element, (unsigned int)HeadNode->Element);
 
-				TempNode = TempNode->Previous;
-			} while (TempNode != NULL);
+				printf("stack element : %d\n", tempValue);
+
+				tempNode = tempNode->Previous;
+
+			} while (tempNode != NULL);
 		}
 		else
 		{

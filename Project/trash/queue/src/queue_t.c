@@ -2,28 +2,33 @@
 #include QUEUE_STATIC_H
 
 
+static MyQueueStatic MyQueue;
+
 void UnitTest1_MyStaticQueue(void)
 {
-	MyQueueStatic MyQueue;
-
-	unsigned char Option;
+	unsigned int option;
+	unsigned char value;
 
 	/*< initialize the static queue */
 	MyStaticQueue_Init(&MyQueue);
 
+	printf(" ****************************************************************************************************\n \
+		                        My Static queue Unit Test 1                                           \n \
+****************************************************************************************************\n");
+
 	while (1)
 	{
-		printf_s("/***  Static Queue  ***/\n1. Enqueue\n2. Dequeue\n3. Peek\n4. Traverse\n");
-		scanf_s("%d", &Option);
+		printf_s("###  Enter the option  ###/\n1. Enqueue\n2. Dequeue\n3. Peek\n4. Traverse\n");
+		scanf("%d", &option);
 
-		switch (Option)
+		switch (option)
 		{
 			case 1:
 			{
 				printf_s("enter element : \n");
-				scanf_s("%d", &Option);
+				scanf_s("%d", &value);
 
-				if (MyStaticQueue_EnQueue(&MyQueue, Option))
+				if (MyStaticQueue_EnQueue(&MyQueue, value))
 				{
 					printf_s("element inserted successfully!\n");
 				}
@@ -35,9 +40,9 @@ void UnitTest1_MyStaticQueue(void)
 			}	
 			case 2:
 			{
-				if (MyStaticQueue_DeQueue(&MyQueue, &Option))
+				if (MyStaticQueue_DeQueue(&MyQueue, &value))
 				{
-					printf_s("dequeued element : %d\n", Option);
+					printf_s("dequeued element : %d\n", value);
 				}
 				else
 				{
@@ -47,9 +52,9 @@ void UnitTest1_MyStaticQueue(void)
 			}
 			case 3:
 			{
-				if (MyStaticQueue_Peek(&MyQueue, &Option))
+				if (MyStaticQueue_Peek(&MyQueue, &value))
 				{
-					printf_s("peek element : %d\n", Option);
+					printf_s("peek element : %d\n", value);
 				}
 				else
 				{

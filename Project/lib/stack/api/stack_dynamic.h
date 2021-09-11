@@ -6,10 +6,10 @@
 /// <summary>
 /// Structure to hold the data of a node
 /// </summary>
-typedef struct MyDynamicStack_t
+typedef struct MyDynamicStack_Tag
 {
-	struct MyDynamicStack_t* Previous;
-	DYNAMIC_STACK_ELEMENT_TYPE Element;
+	struct MyDynamicStack_Tag* Previous;
+	void* Element;
 }MyDynamicStack;
 
 /// <summary>
@@ -17,36 +17,36 @@ typedef struct MyDynamicStack_t
 /// </summary>
 /// <param name="MyStack"></param>
 /// <returns></returns>
-extern unsigned char GetMyDynamicStack(MyDynamicStack** MyStack);
+extern unsigned char MyDynamicQueue_Create(MyDynamicStack** HeadNode, uint16_t ElementSize);
 
 /// <summary>
-/// This function push the data to the stack
+/// This function is used to push the data to the stack
 /// </summary>
-/// <param name="StackHead"></param>
-/// <param name="ElementValue"></param>
+/// <param name="MyDynamicStack - pointer to the dynamic stack"></param>
+/// <param name="void* - pointer to the data to be pushed"></param>
 /// <returns>0 on failure, 1 on success</returns>
-extern unsigned char PushMyDynamicStack(MyDynamicStack* StackHead, DYNAMIC_STACK_ELEMENT_TYPE ElementValue);
+extern unsigned char MyDynamicStack_Push(MyDynamicStack* HeadNode, void* StackElement);
 
 /// <summary>
-/// This function pops the data from the stack
+/// This function is used to pop the data from the stack
 /// </summary>
-/// <param name="StackHead"></param>
-/// <param name="ElementValue"></param>
+/// <param name="MyDynamicStack - pointer to the dynamic stack"></param>
+/// <param name="void* - pointer to the data where the popped element will be stored"></param>
 /// <returns>0 on failure, 1 on success</returns>
-extern unsigned char PopMyDynamicStack(MyDynamicStack* StackHead, DYNAMIC_STACK_ELEMENT_TYPE* ElementValue);
+extern unsigned char MyDynamicStack_Pop(MyDynamicStack* HeadNode, void* StackElement);
 
 /// <summary>
-/// This function returns the peek element of the stack, it will not remove the element
+/// This function is used to peek the data from the stack
 /// </summary>
-/// <param name="StackHead"></param>
-/// <param name="ElementValue"></param>
+/// <param name="MyDynamicStack - pointer to the dynamic stack"></param>
+/// <param name="void* - pointer to the data where the peeked element will be stored"></param>
 /// <returns>0 on failure, 1 on success</returns>
-extern unsigned char PeekMyDynamicStack(MyDynamicStack* StackHead, DYNAMIC_STACK_ELEMENT_TYPE* ElementValue);
+extern unsigned char MyDynamicStack_Peek(MyDynamicStack* HeadNode, void* StackElement);
 
 /// <summary>
 /// This function traverse the stack
 /// </summary>
-/// <param name="StackHead"></param>
-extern void TraverseMyDynamicStack(MyDynamicStack* StackHead);
+/// <param name="HeadNode"></param>
+extern void MyDynamicStack_Traverse(MyDynamicStack* HeadNode);
 
 #endif //__STACK_DYNAMIC_H__

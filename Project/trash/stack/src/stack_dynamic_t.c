@@ -12,19 +12,21 @@ void UnitTest1_MyDynamicStack(void)
 		                        My Dynamic statck Unit Test 1                                           \n \
 ****************************************************************************************************\n");
 
-	if (GetMyDynamicStack(&myStack));
+	if (MyDynamicQueue_Create(&myStack, sizeof(unsigned int)));
 	{
 		while (1)
 		{
 			printf("### Enter the option ###\n1. Push Element\n2. Pop Element\n3. Peek Element\n4. Traverse stack\n");
 			scanf("%d", &option);
+
 			switch (option)
 			{
 				case 1:
 				{
 					printf("Enter the element : \n");
 					scanf("%d", &value1);
-					if (PushMyDynamicStack(myStack, value1))
+
+					if (MyDynamicStack_Push(myStack, &value1))
 					{
 						printf("Element pushed to the stack : %d\n", value1);
 					}
@@ -37,7 +39,7 @@ void UnitTest1_MyDynamicStack(void)
 
 				case 2:
 				{
-					if (PopMyDynamicStack(myStack, &value1))
+					if (MyDynamicStack_Pop(myStack, &value1))
 					{
 						printf("Element popped succesfully : %d\n", value1);
 					}
@@ -50,7 +52,7 @@ void UnitTest1_MyDynamicStack(void)
 
 				case 3:
 				{
-					if (PeekMyDynamicStack(myStack, &value1))
+					if (MyDynamicStack_Peek(myStack, &value1))
 					{
 						printf("Peek element : %d\n", value1);
 					}
@@ -63,7 +65,8 @@ void UnitTest1_MyDynamicStack(void)
 
 				case 4:
 				{
-					TraverseMyDynamicStack(myStack);
+					MyDynamicStack_Traverse(myStack);
+
 					break;
 				}
 

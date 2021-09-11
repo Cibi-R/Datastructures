@@ -1,6 +1,11 @@
 #ifndef __STACK_DYNAMIC_H_T__
 #define __STACK_DYNAMIC_H_T__
 
+/// <summary>
+/// unit test code for the dynamic stack library
+/// </summary>
+/// <param name=""></param>
+extern void UnitTest1_MyDynamicStack(void);
 
 /*
  * Get Min Element.

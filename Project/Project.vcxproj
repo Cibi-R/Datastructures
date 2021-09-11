@@ -132,7 +132,7 @@
     <ClCompile Include="lib\list\src\single_list_static.c" />
     <ClCompile Include="lib\queue\src\queue_static.c" />
     <ClCompile Include="lib\queue\src\queue_dynamic.c" />
-    <ClCompile Include="lib\stack\src\stack.c" />
+    <ClCompile Include="lib\stack\src\stack_static.c" />
     <ClCompile Include="lib\stack\src\stack_dynamic.c" />
     <ClCompile Include="lib\tree\binary_search_tree\src\binary_search_tree.c" />
     <ClCompile Include="src.c" />
@@ -143,7 +143,7 @@
     <ClCompile Include="trash\queue\src\queue_dynamic_t.c" />
     <ClCompile Include="trash\queue\src\queue_t.c" />
     <ClCompile Include="trash\stack\src\stack_dynamic_t.c" />
-    <ClCompile Include="trash\stack\src\stack_t.c" />
+    <ClCompile Include="trash\stack\src\stack_static_t.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\include.h" />
@@ -155,7 +155,7 @@
     <ClInclude Include="lib\list\api\single_list_static.h" />
     <ClInclude Include="lib\queue\api\queue_static.h" />
     <ClInclude Include="lib\queue\api\queue_dynamic.h" />
-    <ClInclude Include="lib\stack\api\stack.h" />
+    <ClInclude Include="lib\stack\api\stack_static.h" />
     <ClInclude Include="lib\stack\api\stack_dynamic.h" />
     <ClInclude Include="lib\tree\binary_search_tree\api\binary_search_tree.h" />
     <ClInclude Include="trash\list\api\circular_list_t.h" />
@@ -165,7 +165,7 @@
     <ClInclude Include="trash\queue\api\queue_dynamic_t.h" />
     <ClInclude Include="trash\queue\api\queue_t.h" />
     <ClInclude Include="trash\stack\api\stack_dynamic_t.h" />
-    <ClInclude Include="trash\stack\api\stack_t.h" />
+    <ClInclude Include="trash\stack\api\stack_static_t.h" />
     <ClInclude Include="trash\tree\api\binary_search_tree_t.h" />
     <ClInclude Include="trash\tree\src\binary_search_tree_t.c" />
   </ItemGroup>

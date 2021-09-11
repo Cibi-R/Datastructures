@@ -1,7 +1,7 @@
 #ifndef __TRASH_H__
 #define __TRASH_H__
 
-#define STACKt_H                   "trash/stack/api/stack_t.h"
+#define STACK_STATICt_H             "trash/stack/api/stack_static_t.h"
 #define STACK_DYNAMICt_H           "trash/stack/api/stack_dynamic_t.h"
 
 #define QUEUEt_H                   "trash/queue/api/queue_t.h"

@@ -1,7 +1,7 @@
 #ifndef __LIBRARY_H__
 #define __LIBRARY_H__
 
-#define STACK_STATIC_H          "lib/stack/api/stack.h"
+#define STACK_STATIC_H          "lib/stack/api/stack_static.h"
 #define STACK_DYNAMIC_H         "lib/stack/api/stack_dynamic.h"
 
 #define QUEUE_STATIC_H          "lib/queue/api/queue_static.h"
