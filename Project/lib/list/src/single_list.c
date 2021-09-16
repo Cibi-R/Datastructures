@@ -2,209 +2,248 @@
 #include SINGLE_LIST_H
 
 
-MySingleList* GetSingleList(void)
+unsigned char MySingleList_Create(MySingleList** RootNode, uint16_t ElementSize)
 {
-	MySingleList *NewList = (MySingleList*)malloc(sizeof(MySingleList));
+	unsigned char retVal = 1;
 
-	if (NewList != NULL)
+	*RootNode = (MySingleList*)malloc(sizeof(MySingleList));
+
+	if (*RootNode != NULL)
 	{
-		NewList->Next = NULL;
+		/*< make list empty */
+		(*RootNode)->Next = NULL;
 
-		/* "Element" member of headnode is used to store the Size of the list. */
-		NewList->Element = -1;
+		/* store the size of the node data to Element memer of the MySingleList HeadNode */
+		(*RootNode)->Element = (void*)ElementSize;
 	}
-
-	return NewList;
-}
-
-unsigned char SingleList_PushElement(MySingleList* HeadNode, ELEMENT_TYPE_SINGLE_LIST Element)
-{
-	MySingleList* NewNode = (MySingleList*)malloc(sizeof(MySingleList));
-
-	if ((HeadNode != NULL) && (NewNode != NULL))
-	{
-		if (HeadNode->Next == NULL)
-		{
-			HeadNode->Next = NewNode;
-		}
-
-		else
-		{
-			MySingleList* TempNode;
-
-			TempNode = HeadNode;
-
-			while (TempNode->Next != NULL)
-			{
-				TempNode = TempNode->Next;
-			}
-
-			TempNode->Next = NewNode;
-		}
-
-		NewNode->Element = Element;
-
-		NewNode->Next = NULL;
-
-		/* Element member of headnode is used to store the Size of list. */
-		HeadNode->Element++;
-
-		return 1;
-	}
-
 	else
 	{
-		/* Incase of failure of insertion delete the newly created node. */
-		if (NewNode != NULL) { free(NewNode); }
+		retVal = 0;
+	}
+	
+	return retVal;
+}
+
+unsigned char MySingleList_PushElement(MySingleList* RootNode, void* Element)
+{
+	unsigned char retVal = 0;
+
+	if (NULL != RootNode)
+	{
+		MySingleList* newNode = (MySingleList*)malloc(sizeof(MySingleList));
+
+		if (NULL != newNode)
+		{
+			/*< allocate memory for the list element */
+			newNode->Element = (void*)malloc((unsigned int)RootNode->Element);
+
+			if (NULL != newNode->Element)
+			{
+				/*< copy the element to be pushed */
+				memcpy(newNode->Element, Element, (unsigned int)RootNode->Element);
+
+				/*< mark the next of new node as null */
+				newNode->Next = NULL;
+
+				MySingleList* tempNode = RootNode;
+
+				while (NULL != tempNode->Next)
+				{
+					tempNode = tempNode->Next;
+				}
+
+				tempNode->Next = newNode;
+
+				retVal = 1;
+			}
+			else
+			{
+				/*< delete the created node, if memory allocation fails for the element of a node */
+				free(newNode);
+			}
+		}
 	}
 }
 
-ELEMENT_TYPE_SINGLE_LIST SingleList_GetElement(MySingleList* MyList,unsigned char Position)
+unsigned char MySingleList_PopElement(MySingleList* RootNode, void* Element)
 {
-	ELEMENT_TYPE_SINGLE_LIST RetElement = 0;
+	unsigned char retVal = 0;
 
-	if ((MyList != NULL) && (MyList->Next != NULL))
+	MySingleList* tempNode = NULL;
+
+	if (NULL != RootNode)
 	{
-		MySingleList* CurrentNode = MyList->Next;
-
-		if (CurrentNode != NULL)
+		if (NULL != RootNode->Next)
 		{
-			/* We are already in the 0th position so, value 0 */
-			int Current_Position = 0;
+			tempNode = RootNode;
 
-			while ((CurrentNode->Next != NULL) && (Current_Position < Position))
+			while (NULL != (tempNode->Next)->Next)
 			{
-				CurrentNode = CurrentNode->Next;
-
-				Current_Position++;
+				tempNode = tempNode->Next;
 			}
+			/*< we are at last element */
 
-			if (Current_Position == Position)
-			{
-				RetElement = CurrentNode->Element;
-			}
+			memcpy(Element, tempNode->Next->Element, (unsigned int)RootNode->Element);
+
+			/*< free the memory for the element */
+			free(tempNode->Next->Element);
+
+			/*< free the memory for the node */
+			free(tempNode->Next);
+
+			/*< make the next as null, make it last element */
+			tempNode->Next = NULL;
+
+			retVal = 1;
+		}
+	}
+
+	return retVal;
+}
+
+unsigned char MySingleList_InsertElement(MySingleList* RootNode, void* Element, uint16_t Position)
+{
+	unsigned char retVal = 0;
+
+	uint16_t currentPosition = 0;
+
+	MySingleList* tempNode = NULL;
+
+	if (NULL != RootNode)
+	{
+		tempNode = RootNode;
+
+		while ((NULL != tempNode->Next) && (currentPosition < Position))
+		{
+			tempNode = tempNode->Next;
+
+			currentPosition++;
 		}
 
+		if (Position == currentPosition)
+		{
+			MySingleList* newNode = (MySingleList*)malloc(sizeof(MySingleList));
+
+			if (NULL != newNode)
+			{
+				newNode->Element = (void*)malloc((unsigned int)RootNode->Element);
+
+				if (NULL != newNode->Element)
+				{
+					/*< copy the element to the newly created node */
+					memcpy(newNode->Element, Element, RootNode->Element);
+
+					/*< insert the newly created node */
+					newNode->Next = tempNode->Next;
+					
+					tempNode->Next = newNode;
+
+					retVal = 1;
+				}
+				else
+				{
+					free(newNode);
+				}
+			}
+		}
+	}
+
+	return retVal;
+}
+
+unsigned char MySingleList_RemoveElement(MySingleList* RootNode, void* Element, uint16_t Position)
+{
+	unsigned char retVal = 0;
+
+	uint16_t currentPosition = 0;
+
+	if (NULL != RootNode)
+	{
+		MySingleList* tempNode = RootNode;
+
+		while ((tempNode->Next != NULL) && (currentPosition < Position))
+		{
+			tempNode = tempNode->Next;
+
+			currentPosition++;
+		}
+
+		if ((currentPosition == Position) && (NULL != tempNode->Next))
+		{
+			MySingleList* linkNode = NULL;
+
+			memcpy(Element, tempNode->Next->Element, (unsigned int)RootNode->Element);
+
+			linkNode = tempNode->Next->Next;
+
+			/*< free the memory for the element */
+			free(tempNode->Next->Element);
+
+			/*< free the memory for the node */
+			free(tempNode->Next);
+
+			/*< relink the list */
+			tempNode->Next = linkNode;
+		}
+	}
+
+	return retVal;
+}
+
+unsigned char MySingleList_GetElement(MySingleList* RootNode, void* Element, uint16_t Position)
+{
+	unsigned char retVal = 0;
+
+	uint16_t currentPosition = 0;
+
+	if (NULL != RootNode)
+	{
+		if (NULL != RootNode->Next)
+		{
+			MySingleList* tempNode = RootNode->Next;
+
+			while ((tempNode->Next != NULL) && (currentPosition < Position))
+			{
+				tempNode = tempNode->Next;
+
+				currentPosition++;
+			}
+
+			if (currentPosition == Position)
+			{
+				memcpy(Element, tempNode->Element, (unsigned int)RootNode->Element);
+
+				retVal = 1;
+			}
+		}
+	}
+
+	return retVal;
+}
+
+void MySingleList_Traverse(MySingleList* MyList)
+{
+	if (NULL != MyList)
+	{
+		if (NULL != MyList->Next)
+		{
+			MyList = MyList->Next;
+
+			do
+			{
+				printf("list element : %d\n", *((unsigned int*)MyList->Element));
+
+				MyList = MyList->Next;
+			} while (NULL != MyList);
+		}
 		else
 		{
-			RetElement = 0;
+			printf("list is empty!\n");
 		}
 	}
-
-	return RetElement;
-}
-
-unsigned char SingleList_InsertElement(MySingleList* MyList, ELEMENT_TYPE_SINGLE_LIST Element, int Position)
-{
-	unsigned char RetVal = 0;
-
-	if (MyList != NULL)
-	{
-		MySingleList *NewNode = (MySingleList*)malloc(sizeof(MySingleList));
-
-		if (NewNode != NULL)
-		{
-			MySingleList* CurrentNode = MyList;
-
-			/* We are in head pointer so, value -1 */
-			int CurrentPosition = -1;
-
-			while ((MyList->Next != NULL) && (CurrentPosition < (Position - 1)))
-			{
-				MyList = MyList->Next;
-				CurrentPosition++;
-			}
-
-			if (CurrentPosition == (Position - 1))
-			{
-				NewNode->Next = MyList->Next;
-				MyList->Next = NewNode;
-				NewNode->Element = Element;
-				RetVal = 1;
-			}
-			else { free(NewNode); /* Free the element incase of failure. */ }
-		}
-	}
-
-	return RetVal;
-}
-
-ELEMENT_TYPE_SINGLE_LIST SingleList_RemoveElement(MySingleList * MyList,int Position)
-{
-	ELEMENT_TYPE_SINGLE_LIST RetElement = 0;
-
-	if (MyList != NULL)
-	{
-		if (MyList->Next != NULL)
-		{
-			int CurrentPosition = -1;
-
-			while ((MyList->Next != NULL) && (CurrentPosition < (Position - 1)))
-			{
-				MyList = MyList->Next;
-				CurrentPosition++;
-			}
-
-			if ((CurrentPosition == (Position - 1)) && ((MyList->Next) != NULL))
-			{
-				RetElement = (MyList->Next)->Element;
-				MyList->Next = (MyList->Next)->Next;
-				free(MyList->Next);
-			}
-		}
-	}
-
-	return RetElement;
-}
-
-ELEMENT_TYPE_SINGLE_LIST SingleList_PopElement(MySingleList* MyList)
-{
-	ELEMENT_TYPE_SINGLE_LIST RetElement = 0;
-
-	if (MyList != NULL)
-	{
-		MySingleList* CurrentNode = MyList;
-
-		if (CurrentNode->Next != NULL)
-		{
-			while ((MyList->Next)->Next != NULL)
-			{
-				MyList = MyList->Next;
-			}
-
-			RetElement = ((MyList->Next)->Element);
-			free(MyList->Next);
-			MyList->Next = NULL;
-		}
-	}
-
-	return RetElement;
-}
-
-void SingleList_Travese(MySingleList* MyList)
-{
-	if (MyList != NULL)
-	{
-		MyList = MyList->Next;
-
-		if (MyList != NULL)
-		{
-			while (MyList != NULL)
-			{
-				printf_s("Element : %d\n", MyList->Element);
-				MyList = MyList->Next;
-			}
-		}
-
-		else
-		{
-			printf_s("Empty List!\n");
-		}
-	}
-
 	else
 	{
-		printf_s("List is not created!\n");
+		printf("list not created!\n");
 	}
 }
 

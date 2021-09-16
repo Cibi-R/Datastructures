@@ -23,7 +23,7 @@ int main()
 #endif
 
 	/*< static stack unit test */
-#if 1
+#if 0
 	UnitTest1_MyStaticStack();
 #endif 
 
@@ -32,7 +32,10 @@ int main()
 	UnitTest1_MyDynamicStack();
 #endif
 
-	//Execute_Double_List();
+	/*< singly linked list */
+#if 1
+	UnitTest1_MySingleList();
+#endif
 
 #if 0
 	Execute_Circular_Singly_List();

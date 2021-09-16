@@ -2,20 +2,13 @@
 #define __SINGLE_LIST_H__
 
 
-/*********************************************************************************************************************
- *							                       Preprocessor Constants
- ********************************************************************************************************************/
-
-#define ELEMENT_TYPE_SINGLE_LIST unsigned int
-
-
  /*********************************************************************************************************************
-  *							                         Typedefinitions
+  *							                           Typedefs
   ********************************************************************************************************************/
 
 typedef struct _MySingleList
 {
-	ELEMENT_TYPE_SINGLE_LIST Element;
+	void* Element;
 	struct _MySingleList *Next;
 }MySingleList;
 
@@ -23,60 +16,62 @@ typedef struct _MySingleList
 /*********************************************************************************************************************
  *							                       Function declarations
  ********************************************************************************************************************/
-/*
- *  @brief : This function is used to create the Head Node to a list."Next" member is used hold the address 
-             of the first node in the list.
- *  @param : void.
- *  @return: MySingleList. dynamically created Pointer to a head node.
- */
-extern MySingleList* GetSingleList(void);
+
+ /// <summary>
+ /// this function is used to create the single list (dynamically allocates memory to the root node)
+ /// </summary>
+ /// <param name="HeadNode - pointer to the head node pointer"></param>
+ /// <returns>0 on failure, 1 on success</returns>
+extern unsigned char MySingleList_Create(MySingleList **RootNode, uint16_t ElementSize);
+
+ /// <summary>
+ /// This function is used to push an element to a list.
+ /// </summary>
+ /// <param name="RootNode - pointer to the head node"></param>
+ /// <param name="Element - Base address of the data to be pushed"></param>
+ /// <returns>0 on failure, 1 on success</returns>
+extern unsigned char MySingleList_PushElement(MySingleList* RootNode, void* Element);
 
 
-/*
- *  @brief : This function is used to push an element to a list.
- *  @param : Pointer to a HeadNode.
- *  @return: unsigned char. Element to be pushed.
- */
-extern unsigned char SingleList_PushElement(MySingleList* MyList, ELEMENT_TYPE_SINGLE_LIST Element);
+ /// <summary>
+ /// This function is used to pop the last element from the list.
+ /// </summary>
+ /// <param name="RootNode - pointer to the head node"></param>
+ /// <param name="Element - Address of data where the popped element will be stored"></param>
+ /// <returns>0 on failure, 1 on success</returns>
+extern unsigned char MySingleList_PopElement(MySingleList* RootNode, void* Element);
+
+/// <summary>
+/// This function is used to insert an element to the list
+/// </summary>
+/// <param name="RootNode - pointer to the head node"></param>
+/// <param name="Element - Address of the data to be inserted"></param>
+/// <param name="Position - Position of the list where the element will be pushed"></param>
+/// <returns>0 on failure, 1 on success</returns>
+extern unsigned char MySingleList_InsertElement(MySingleList* RootNode, void* Element, uint16_t Position);
+
+/// <summary>
+/// This function is used to remove an element from the list
+/// </summary>
+/// <param name="RootNode - pointer to the head node"></param>
+/// <param name="Element - Address of the data where removed element will be stored"></param>
+/// <param name="Position - Position of the element to be removed"></param>
+/// <returns>0 on failure, 1 on success</returns>
+extern unsigned char MySingleList_RemoveElement(MySingleList* RootNode, void* Element, uint16_t Position);
+
+/// <summary>
+/// This function is used to get an element from the list without removing it
+/// </summary>
+/// <param name="RootNode - pointer to the head node"></param>
+/// <param name="Element - Address of the data where the list element will be stored"></param>
+/// <param name="Position - Position of the element to be retrieved"></param>
+/// <returns>0 on failure, 1 on success</returns>
+extern unsigned char MySingleList_GetElement(MySingleList* RootNode, void* Element, uint16_t Position);
 
 
-/*
- *  @brief : This function is used to get an element from a specified location in the list.
- *  @param : Pointer to a HeadNode and Position.
- *  @return: Element from the specified location on success. 0 on failure.
- */
-extern ELEMENT_TYPE_SINGLE_LIST SingleList_GetElement(MySingleList* MyList, unsigned char Position);
-
-
-/*
- *  @brief : This function is used to insert an element to a list at a specified location. This function won't delete the Node
- *  @param : Pointer to a HeadNode, Element, Position
- *  @return: unsigned char.
- */
-extern unsigned char SingleList_InsertElement(MySingleList* MyList, ELEMENT_TYPE_SINGLE_LIST Element, int Position);
-
-
-/*
- *  @brief : This function is used to remove an element at a specified location.
- *  @param : Pointer to a HeadNode and position
- *  @return: Element on success, 0 on failure.
- */
-ELEMENT_TYPE_SINGLE_LIST SingleList_RemoveElement(MySingleList* MyList,int Position);
-
-
-/*
- *  @brief : This function is used to Pop an element from a list.
- *  @param : Pointer to a HeadNode.
- *  @return: Element on success, 0 on failure.
- */
-ELEMENT_TYPE_SINGLE_LIST SingleList_PopElement(MySingleList* MyList);
-
-
-/*
- *  @brief : This function is used to traverse the list.
- *  @param : Pointer to a HeadNode.
- *  @return: void.
- */
-void SingleList_Travese(MySingleList* MyList);
+/// <summary>
+/// This function traverses the list
+/// </summary>
+extern unsigned char MySingleList_Traverse(MySingleList* RootNode);
 
 #endif //__SINGLE_LIST_H__
