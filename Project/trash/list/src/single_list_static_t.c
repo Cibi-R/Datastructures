@@ -2,22 +2,26 @@
 #include SINGLE_LIST_STATIC_H
 
 
-void Execute_Single_List_Static(void)
+void UnitTest1_MySingleList_Static(void)
 {
-	unsigned char Option,i;
+	MyListStatic MyList;
+
+	MyStaticLlist_Init(&MyList);
+
+	unsigned char option,i;
 
 	while (1)
 	{
 		printf_s("1. Push Element.\n2. Pop Element\n3. Insert Element\n4. Remove Element\n5. Traverse List\n");
-		scanf_s("%d", &Option);
+		scanf_s("%d", &option);
 
-		switch (Option)
+		switch (option)
 		{
 		case 1:
 			printf_s("Enter the Element : \n");
-			scanf_s("%d", &Option);
+			scanf_s("%d", &option);
 
-			if (PushElement(Option))
+			if (MyStaticList_PushElement(&MyList, option))
 			{
 				printf_s("Element Inserted Successfully!\n");
 			}
@@ -26,16 +30,26 @@ void Execute_Single_List_Static(void)
 				printf_s("Element not inserted!\n");
 			}
 			break;
+
 		case 2:
-			printf_s("Popped Element : %d\n", PopElement());
+			if (MyStaticList_PopElement(&MyList, &option))
+			{
+				printf_s("Popped Element : %d\n", option);
+			}
+			else
+			{
+				printf_s("element pop failed\n");
+			}
 			break;
+
 		case 3:
 			printf_s("Enter the Element : \n");
-			scanf_s("%d", &Option);
+			scanf_s("%d", &option);
+
 			printf_s("Enter the Position : \n");
 			scanf_s("%d", &i);
 
-			if (InsertElement(Option, i))
+			if (MyStaticList_InsertElement(&MyList, option, i))
 			{
 				printf_s("Element inserted successfully\n");
 			}
@@ -44,15 +58,27 @@ void Execute_Single_List_Static(void)
 				printf_s("Element not inserted\n");
 			}
 			break;
+
 		case 4:
 			printf_s("Enter the Position : \n");
 			scanf_s("%d", &i);
-			printf_s("Removed Element : %d\n", RemoveElement(i));
+
+			if (MyStaticList_RemoveElement(&MyList, &option, i))
+			{
+				printf_s("Removed Element : %d\n", i);
+			}
+			else
+			{
+				printf_s("Element remove failed\n");
+			}
 			break;
+
 		case 5:
-			Traverse_Single_Static_List();
+			MyStaticList_Traverse(&MyList);
 			break;
+
 		default:
+			printf_s("invalid option...\n");
 			break;
 		}
 	}

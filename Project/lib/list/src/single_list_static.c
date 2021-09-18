@@ -1,138 +1,138 @@
 #include <include.h>
 #include SINGLE_LIST_STATIC_H
 
-static SINGLE_LIST_STATIC_ELEMENT_TYPE Single_List_Static[SINGLE_LIST_STATIC_MAX_SIZE];
-static int Top = -1;
-
-static unsigned char IsListFull(void)
+void MyStaticLlist_Init(MyListStatic* MyList)
 {
-	if (Top == (SINGLE_LIST_STATIC_MAX_SIZE - 1))
+	MyList->top = -1;
+
+	memset(MyList->Buffer, 0, SINGLE_LIST_STATIC_MAX_SIZE);
+}
+
+static unsigned char IsListFull(MyListStatic *MyList)
+{
+	uint8_t retVal = 0;
+
+	if ((SINGLE_LIST_STATIC_MAX_SIZE - 1) == MyList->top)
 	{
 		return 1;
 	}
-	else
-	{
-		return 0;
-	}
+	
+	return retVal;
 }
 
-static unsigned char IsListEmpty(void)
+static unsigned char IsListEmpty(MyListStatic *MyList)
 {
-	if (Top == -1)
+	uint8_t retVal = 0;
+
+	if (MyList->top == -1)
 	{
 		return 1;
 	}
+	
+	return retVal;
+}
+
+unsigned char MyStaticList_PushElement(MyListStatic *MyList, SINGLE_LIST_STATIC_ELEMENT_TYPE Element)
+{
+	uint8_t retVal = 1;
+
+	if (IsListFull(MyList))
+	{
+		retVal = 0;
+	}
 	else
 	{
-		return 0;
+		MyList->top++;
+
+		MyList->Buffer[MyList->top] = Element;
 	}
+
+	return retVal;
 }
 
-unsigned char PushElement(SINGLE_LIST_STATIC_ELEMENT_TYPE Element)
+
+unsigned char MyStaticList_PopElement(MyListStatic* MyList, SINGLE_LIST_STATIC_ELEMENT_TYPE* Element)
 {
-	if (IsListFull())
+	unsigned char retVal = 1;
+
+	if (!IsListEmpty(MyList))
 	{
-		return 0;
+		*Element = MyList->Buffer[MyList->top];
+
+		MyList->top--;
 	}
 	else
 	{
-		Top++;
+		retVal = 0;
 	}
 
-	Single_List_Static[Top] = Element;
-
-	return 1;
+	return retVal;
 }
 
-SINGLE_LIST_STATIC_ELEMENT_TYPE PopElement(void)
+unsigned char MyStaticList_InsertElement(MyListStatic *MyList, SINGLE_LIST_STATIC_ELEMENT_TYPE Element, int16_t Position)
 {
-	SINGLE_LIST_STATIC_ELEMENT_TYPE RetVal = 0;
+	unsigned char retVal = 0;
 
-	if (!IsListEmpty())
+	if (!IsListFull(MyList))
 	{
-		RetVal = Single_List_Static[Top];
-		Top--;
-	}
-
-	return RetVal;
-}
-
-unsigned char InsertElement(SINGLE_LIST_STATIC_ELEMENT_TYPE Element,unsigned char Position)
-{
-	unsigned char RetVal = 0;
-	int i;
-
-	if (IsListFull())
-	{
-		/* Do nothing */
-	}
-
-	else if (Position <= (Top + 1))
-	{
-		for (i = Top; i >= Position; i--)
+		/*< list should not overflow and Position value should be within the top + 1 element */
+		if ((SINGLE_LIST_STATIC_MAX_SIZE > (MyList->top + 1)) && ((MyList->top + 1) >= Position))
 		{
-			Single_List_Static[i + 1] = Single_List_Static[i];
+			for (int16_t i = MyList->top; i >= Position; i--)
+			{
+				MyList->Buffer[i + 1] = MyList->Buffer[i];
+			}
+
+			MyList->Buffer[Position] = Element;
+
+			MyList->top++;
+
+			retVal = 1;
 		}
-		Single_List_Static[Position] = Element;
 
-		Top++;
-
-		RetVal = 1;
+		return retVal;
 	}
 
-	else
-	{
-		/* Do nothing */
-	}
-
-	return RetVal;
+	return retVal;
 }
 
-SINGLE_LIST_STATIC_ELEMENT_TYPE RemoveElement(unsigned char Position)
+
+unsigned char MyStaticList_RemoveElement(MyListStatic* MyList, SINGLE_LIST_STATIC_ELEMENT_TYPE* Element, int16_t Position)
 {
-	SINGLE_LIST_STATIC_ELEMENT_TYPE RetElement = 0;
+	unsigned char retVal = 0;
 
-	int i;
-
-	if (IsListEmpty())
+	if (!IsListEmpty(MyList))
 	{
-		/* Do nothing */
-	}
-
-	else if (Position <= Top)
-	{
-		RetElement = Single_List_Static[Position];
-
-		Top--;
-
-		for (i = Position; i <= Top; i++)
+		if (Position <= MyList->top)
 		{
-			Single_List_Static[i] = Single_List_Static[i+1];
+			*Element = MyList->Buffer[MyList->top];
+
+			for (int16_t i = Position; i < MyList->top; i++)
+			{
+				MyList->Buffer[i] = MyList->Buffer[i + 1];
+			}
+
+			MyList->top--;
+
+			retVal = 1;
 		}
 	}
 
-	else
-	{
-		/* Do nothing */
-	}
-
-	return RetElement;
+	return retVal;
 }
 
-void Traverse_Single_Static_List(void)
+void MyStaticList_Traverse(MyListStatic *MyList)
 {
-	unsigned char i;
-
-	if (IsListEmpty())
+	if (IsListEmpty(MyList))
 	{
-		printf_s("List is Empty!\n");
+		printf_s("list is empty...!\n");
 	}
 
 	else
 	{
-		for (i = 0; i <= Top; i++)
+		for (int16_t i = 0; i <= MyList->top; i++)
 		{
-			printf_s("Element[%d] = %d\n", i, Single_List_Static[i]);
+			printf_s("Element[%d] = %d\n", i, MyList->Buffer[i]);
 		}
 	}
 }

@@ -1,6 +1,6 @@
 #ifndef _SINGLE_LIST_STATIC_H_T_
 #define _SINGLE_LIST_STATIC_H_T_
 
-extern void Execute_Single_List_Static(void);
+extern void UnitTest1_MySingleList_Static(void);
 
 #endif
