@@ -2,37 +2,46 @@
 #include CIRCULAR_LIST_H
 
 
-void Execute_Circular_Singly_List(void)
+void UnitTest1_MyCircularList(void)
 {
 	uint32_t Option, Position;
 
-	MyCircularSinglyList* MyList = GetCircularSinglyList();
+	MyCircularSinglyList* MyCircularList;
 
-	while (1)
+	MyCircularList_Create(&MyCircularList, sizeof(unsigned int));
+
+	printf(" ****************************************************************************************************\n \
+		                        My singly circular list Unit Test 1                                       \n \
+****************************************************************************************************\n");
+
+	if (NULL != MyCircularList)
 	{
-		printf_s("1. Push Element\n2. Pop Element\n3. Insert Element\n4. Remove Element\n5. Traverse Element\n");
-		scanf_s("%d", &Option);
-
-		switch (Option)
+		while (1)
 		{
-			case 1:
+			printf_s("1. Push Element\n2. Pop Element\n3. Insert Element\n4. Remove Element\n5. Traverse Element\n");
+			scanf_s("%d", &Option);
+
+			switch (Option)
 			{
-				printf_s("Enter the Element : \n");
-				scanf_s("%d", &Option);
-				if (CircularList_PushElement(MyList,Option))
+				case 1:
 				{
-					printf_s("Element Inserted Successfully!\n");
+					printf_s("Enter the Element : \n");
+					scanf_s("%d", &Option);
+
+					if (MyCircularList_PushElement(MyCircularList, &Option))
+					{
+						printf_s("Element Inserted Successfully!\n");
+					}
+					else
+					{
+						printf_s("Element is not inserted!\n");
+					}
+					break;
 				}
-				else
-				{
-					printf_s("Element is not inserted!\n");
-				}
-				break;
-			}
 
 			case 2:
 			{
-				if (CircularList_PopElement(MyList, &Option))
+				if (MyCircularList_PopElement(MyCircularList, &Option))
 				{
 					printf_s("Element popped Successfully  %d\n", Option);
 				}
@@ -50,7 +59,7 @@ void Execute_Circular_Singly_List(void)
 				printf_s("Enter the Position : \n");
 				scanf_s("%d", &Position);
 
-				if (CircularList_InsertElement(MyList, Option, Position))
+				if (MyCircularList_InsertElement(MyCircularList, &Option, Position))
 				{
 					printf("Element inserted : %d\n", Option);
 				}
@@ -60,6 +69,7 @@ void Execute_Circular_Singly_List(void)
 				}
 				break;
 			}
+#if 0
 			case 4:
 			{
 				printf_s("Enter the Position : \n");
@@ -75,10 +85,17 @@ void Execute_Circular_Singly_List(void)
 				}
 				break;
 			}
-			case 5:
-			{
-				CircularList_Traverse(MyList);
-				break;
+#endif
+				case 5:
+				{
+					MyCiruclarList_Traverse(MyCircularList);
+					break;
+				}
+
+				default:
+				{
+					break;
+				}
 			}
 		}
 	}

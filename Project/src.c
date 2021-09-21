@@ -27,18 +27,18 @@ int main()
 	UnitTest1_MyStaticStack();
 #endif 
 
-	/*< dynamci queue unit test */
+	/*< dynamic queue unit test */
 #if 0
 	UnitTest1_MyDynamicStack();
 #endif
 
-	/*< singly linked list */
-#if 1
+	/*< singly circular list unit test */
+#if 0
 	UnitTest1_MySingleList();
 #endif
 
-#if 0
-	Execute_Circular_Singly_List();
+#if 1
+	UnitTest1_MyCircularList();
 #endif
 
 	while (1);

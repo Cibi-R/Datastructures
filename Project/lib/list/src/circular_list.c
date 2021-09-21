@@ -1,231 +1,221 @@
 #include <include.h>
 #include CIRCULAR_LIST_H
 
-MyCircularSinglyList* GetCircularSinglyList(void)
+unsigned char MyCircularList_Create(MyCircularSinglyList** HeadNode, uint16_t Size)
 {
-	MyCircularSinglyList*NewList = (MyCircularSinglyList*)malloc(sizeof(MyCircularSinglyList));
+	unsigned char retVal = 1;
 
-	if (NewList != NULL)
+	*HeadNode = (MyCircularSinglyList*)malloc(sizeof(MyCircularSinglyList));
+
+	if (*HeadNode != NULL)
 	{
-		NewList->Element = 0;
-		NewList->Next = NULL;
+		(*HeadNode)->Next = NULL;
+
+		(*HeadNode)->Element = (void*)Size;
+	}
+	else
+	{
+		retVal = 0;
 	}
 
-	return NewList;
+	return retVal;
 }
 
-unsigned char CircularList_PushElement(MyCircularSinglyList* List, CIRCULAR_SINGLY_LIST_ELEMENT_TYPE Element)
+unsigned char MyCircularList_PushElement(MyCircularSinglyList* HeadNode, void* Element)
 {
-	unsigned char RetVal = 1;
+	unsigned char retVal = 0;
 
-	MyCircularSinglyList* NewNode = (MyCircularSinglyList*)malloc(sizeof(MyCircularSinglyList));
-
-	MyCircularSinglyList* TempNode;
+	MyCircularSinglyList* tempNode = NULL;
 
 	/*< list is not created */
-	if ((NewNode != NULL) && (List != NULL))
+	if (NULL != HeadNode)
 	{
-		/*< TempNode is the last node in the list */
-		TempNode = List->Next;
+		MyCircularSinglyList* newNode = (MyCircularSinglyList*) malloc(sizeof(MyCircularSinglyList));
 
-		/*< pointer to head node will point to the last node */
-		List->Next = NewNode;
-
-		if (TempNode == NULL)
+		if (NULL != newNode)
 		{
-			/*< if circular singly list has one node, the node should be pointing to itself */
-			NewNode->Next = NewNode;
-		}
+			newNode->Element = (void*) malloc((uint16_t)HeadNode->Element);
 
-		else
-		{
-			NewNode->Next = TempNode->Next;
-
-			TempNode->Next = NewNode;
-		}
-
-		/*< store element */
-		NewNode->Element = Element;
-
-		RetVal = 1;
-	}
-
-	return RetVal;
-}
-
-unsigned char CircularList_PopElement(MyCircularSinglyList* List, CIRCULAR_SINGLY_LIST_ELEMENT_TYPE* Element)
-{
-	unsigned char RetVal = 0;
-
-	MyCircularSinglyList* TempNode = List->Next;
-
-	if (TempNode != NULL)
-	{
-		TempNode = TempNode->Next;
-
-		while (TempNode->Next != List->Next)
-		{
-			TempNode = TempNode->Next;
-		}
-
-		*Element = (TempNode->Next)->Element;
-
-		/*< one node is present in the list */
-		if (TempNode->Next == List->Next)
-		{
-			free(TempNode->Next);
-
-			/*< circular singly list is empty */
-			List->Next = NULL;
-		}
-		else
-		{
-			/*< store the last node next address to previous node's next address */
-			TempNode->Next = (TempNode->Next)->Next;
-
-			/*< delete the last node */
-			free(List->Next);
-
-			/*< make the head node to point to last node */
-			List->Next = TempNode;
-		}
-
-		RetVal = 1;
-	}
-
-	return RetVal;
-}
-
-unsigned char CircularList_InsertElement(MyCircularSinglyList* List, CIRCULAR_SINGLY_LIST_ELEMENT_TYPE Element, uint32_t Position)
-{
-#if 0
-	unsigned char RetVal = 0;
-
-	uint32_t CurrentPosition = 0;
-
-	MyCircularSinglyList* TempNode;
-
-	MyCircularSinglyList* NewNode;
-
-	MyCircularSinglyList* FirstNode;
-
-	if (List != NULL)
-	{
-		if ((List->Next == NULL) && (Position == 0))
-		{
-			CircularList_PushElement(List, Element);
-
-			RetVal = 1;
-		}
-
-		else if (List->Next != NULL)
-		{
-			NewNode = (MyCircularSinglyList*)malloc(sizeof(MyCircularSinglyList));
-
-			if (NewNode != NULL)
+			if (NULL != newNode->Element)
 			{
-				FirstNode = (List->Next)->Next;
+				/*< copy th element */
+				memcpy(newNode->Element, Element, (uint16_t)HeadNode->Element);
 
-				TempNode = FirstNode;
+				tempNode = HeadNode;
 
-				while ((TempNode->Next != FirstNode) && (CurrentPosition < Position))
+				/*< root node point to the first inserted node of the list */
+				if (NULL == tempNode->Next)
 				{
-					CurrentPosition++;
+					/*< list is empty, make root node point to the newnode */
+					HeadNode->Next = newNode;
 
-					TempNode = TempNode->Next;
+					/*< make new node point to itself, create a circular list */
+					newNode->Next = newNode;
+				}
+				/*< list is not empty */
+				else
+				{
+					/*< point to the first node */
+					tempNode = tempNode->Next;
+
+					/*< last node will point to the first node so, run the loop till it points the first node */
+					while (HeadNode->Next != tempNode->Next)
+					{
+						tempNode = tempNode->Next;
+					}
+
+					/*< link the node */
+					tempNode->Next = newNode;
+
+					/*< make it circular by linking the last node to first node */
+					newNode->Next = HeadNode->Next;
 				}
 
-				if (CurrentPosition == Position)
-				{
-					if (CurrentPosition == 0)
-					{
-						NewNode->Next = List->Next->Next;
+				retVal = 1;
+			}
+			else
+			{
+				free(newNode);
+			}
+		}
+	}
 
-						List->Next->Next = NewNode;
+	return retVal;
+}
+
+unsigned char MyCircularList_PopElement(MyCircularSinglyList* HeadNode, void* Element)
+{
+	unsigned char retVal = 0;
+
+	MyCircularSinglyList* tempNode = NULL;
+
+	if (NULL != HeadNode)
+	{
+		if (NULL != HeadNode->Next)
+		{
+			tempNode = HeadNode;
+
+			if (tempNode->Next == (tempNode->Next)->Next)
+			{
+				/*< in the next instruction we are setting this value to NULL */
+				tempNode = HeadNode->Next;
+
+				/*< only one element present inside the list */
+				HeadNode->Next = NULL;
+			}
+			else
+			{
+				while (HeadNode->Next != (tempNode->Next)->Next)
+				{
+					tempNode = tempNode->Next;
+				}
+			}
+
+			printf_s("value : %d\n", *((unsigned int*)(tempNode->Next)->Element));
+
+			memcpy(Element, (tempNode->Next)->Element, (uint16_t)HeadNode->Element);
+
+			free(tempNode->Next->Element);
+
+			free(tempNode->Next);
+
+			/*< point to the first node */
+			tempNode->Next = HeadNode->Next;
+
+			retVal = 1;
+		}
+	}
+
+	return retVal;
+}
+
+unsigned char MyCircularList_InsertElement(MyCircularSinglyList* HeadNode, void* Element, uint16_t Position)
+{
+	uint16_t currPosition = 0;
+
+	if (NULL != HeadNode)
+	{
+		if (NULL != HeadNode->Next)
+		{
+			MyCircularSinglyList* tempNode = HeadNode;
+
+			while ((((tempNode->Next)->Next) != HeadNode->Next) && (Position < currPosition))
+			{
+				tempNode = tempNode->Next;
+
+				currPosition++;
+			}
+
+			if (currPosition == Position)
+			{
+				MyCircularSinglyList* newNode = (MyCircularSinglyList*) malloc(sizeof(MyCircularSinglyList));
+
+				if (NULL != newNode)
+				{
+					newNode->Element = (void*)malloc((uint16_t)HeadNode->Element);
+
+					if (NULL != newNode->Element)
+					{
+						if (0u == Position)
+						{
+							MyCircularSinglyList* lastNode = HeadNode;
+
+							/*< if the position is 0 we should alter the next of the last element */
+							while (((lastNode->Next)->Next) != HeadNode->Next)
+							{
+								lastNode = lastNode->Next;
+
+								currPosition++;
+							}
+
+							lastNode->Next->Next = newNode;
+						}
+						
+						memcpy(newNode->Element, Element, (uint16_t)HeadNode->Element);
+
+						newNode->Next = tempNode->Next;
+
+						tempNode->Next = newNode->Next;
+					}
+					else
+					{
+						free(newNode);
 					}
 				}
-				else
-				{
-					free(NewNode);
-				}
-			}
-		}
-	}
-
-	return RetVal;
-#endif 
-}
-
-
-unsigned char CircularList_RemoveElement(MyCircularSinglyList* List, CIRCULAR_SINGLY_LIST_ELEMENT_TYPE* Element, uint32_t Position)
-{
-	unsigned char RetVal = 0;
-
-	MyCircularSinglyList* TempNode = List;
-
-	uint32_t CurrentPosition = 0;
-
-	if (TempNode != NULL)
-	{
-		if (TempNode->Next != NULL)
-		{
-			while ((((TempNode->Next)->Next) != (List->Next)) && (CurrentPosition < Position))
-			{
-				TempNode = TempNode->Next;
-			}
-
-			if (CurrentPosition == Position)
-			{
-				*Element = (TempNode->Next)->Element;
-
-				if ((TempNode->Next)->Next == List->Next)
-				{
-					free(TempNode->Next);
-
-					TempNode->Next = NULL;
-				}
-
-				else
-				{
-					MyCircularSinglyList* DeleteNode = TempNode->Next;
-
-					TempNode->Next = (TempNode->Next)->Next;
-
-					free(DeleteNode);
-				}
-
-				RetVal = 1;
 			}
 		}
 	}
 }
 
-void CircularList_Traverse(MyCircularSinglyList* List)
+unsigned char MyCircularList_RemoveElement(MyCircularSinglyList* List, void* Element, uint16_t Position)
 {
-	if (List == NULL)
+
+}
+
+unsigned char MyCiruclarList_Traverse(MyCircularSinglyList* HeadNode)
+{
+	if (HeadNode == NULL)
 	{
 		printf_s("Circular singly list is not created!\n");
 	}
 
-	else if (List->Next == NULL)
+	else if (HeadNode->Next == NULL)
 	{
 		printf_s("Circular singly list is empty!\n");
 	}
 
 	else 
 	{
-		MyCircularSinglyList* Temp = (List->Next)->Next;
+		MyCircularSinglyList* Temp = HeadNode->Next;
 
 		do
 		{
-			printf_s("Element : %d\n", Temp->Element);
+			printf_s("Element : %d\n", *((unsigned int*)(Temp->Element)));
 
 			Temp = Temp->Next;
 
 			/*printf_s("Address 1 : %d\n", Temp);
 			printf_s("Address 2 : %d\n", List->Next);*/
-		}while(Temp != (List->Next)->Next);
-
-		printf_s("Traverse completed!\n");
+		}while(Temp != HeadNode->Next);
 	}
 }
