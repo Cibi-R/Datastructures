@@ -37,10 +37,13 @@ int main()
 	UnitTest1_MySingleList();
 #endif
 
-#if 1
+#if 0
 	UnitTest1_MyCircularList();
 #endif
 
+#if 1
+	UnitTest1_MyDoubleList();
+#endif
 	while (1);
 }
 

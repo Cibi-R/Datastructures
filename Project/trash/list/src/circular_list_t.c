@@ -18,7 +18,9 @@ void UnitTest1_MyCircularList(void)
 	{
 		while (1)
 		{
-			printf_s("1. Push Element\n2. Pop Element\n3. Insert Element\n4. Remove Element\n5. Traverse Element\n");
+			printf_s("### Circular List ###\n");
+			printf_s("1. Push Element\n2. Pop Element\n3. Insert Element\n4. Remove Element\n5. Traverse List\n");
+			printf_s("6. Get Element\n");
 			scanf_s("%d", &Option);
 
 			switch (Option)

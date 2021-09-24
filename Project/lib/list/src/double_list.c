@@ -1,204 +1,135 @@
 #include <include.h>
 #include DOUBLE_LIST_H
 
-MyDoubleList* GetMyDoubleList(void)
+unsigned char MyDoubleList_Create(MyDoubleList** RootNode, uint16_t ElementSize)
 {
-	MyDoubleList* NewList = (MyDoubleList*)malloc(sizeof(MyDoubleList));
+	unsigned char retVal = 0;
 
-	if (NewList != NULL)
+	*RootNode = (MyDoubleList*)malloc(sizeof(MyDoubleList));
+
+	if (*RootNode != NULL)
 	{
-		NewList->Previous = NULL;
-		NewList->Element  = 0;
-		NewList->Next     = NULL;
+		(*RootNode)->Previous = NULL;
+		(*RootNode)->Element = (uint16_t)ElementSize;
+		(*RootNode)->Next     = NULL;
+
+		retVal = 1;
 	}
 
-	return NewList;
+	return retVal;
 }
 
-unsigned char DoubleList_PushElement(MyDoubleList* List, DOUBLE_LIST_ELEMENT_TYPE Element)
+unsigned char MyDoubleList_PushElement(MyDoubleList* RootNode, void* Element)
 {
-	unsigned char RetVal = 1;
+	unsigned char retVal = 0;
 
-	MyDoubleList* NewNode = (MyDoubleList*)malloc(sizeof(MyDoubleList));
+	MyDoubleList* tempNode = NULL;
 
-	if ((NewNode != NULL) && (List != NULL))
+	MyDoubleList* newNode = NULL;
+
+	if (NULL != RootNode)
 	{
-		if (List->Next == NULL)
-		{
-			List->Next = NewNode;
+		newNode = (MyDoubleList*)malloc(sizeof(MyDoubleList));
 
-			NewNode->Previous = NULL;
-		}
-		else
+		if (NULL != newNode)
 		{
-			MyDoubleList* TempNode = List->Next;
+			newNode->Element = (void*)malloc((uint16_t)RootNode->Element);
 
-			while (TempNode->Next != NULL)
+			if (NULL != newNode->Element)
 			{
-				TempNode = TempNode->Next;
-			}
+				/*< copy the element */
+				memcpy(newNode->Element, Element, (uint16_t)RootNode->Element);
 
-			TempNode->Next = NewNode;
+				/*< point to head node */
+				tempNode = RootNode;
 
-			NewNode->Previous = TempNode;
-		}
+				/*< list is empty so, first node previous pointer should point to NULL */
+				if (NULL == tempNode->Next)
+				{
+					newNode->Previous = NULL;	
+				}
+				else
+				{
+					while (NULL != tempNode->Next)
+					{
+						tempNode = tempNode->Next;
+					}
 
-		NewNode->Element = Element;
-		NewNode->Next = NULL;
+					/*< link the new node */
+					tempNode->Next = newNode;
 
-		List->Element++;
-	}
+					/*< link the new node with existing last node */
+					newNode->Previous = tempNode;
 
-	else
-	{
-		RetVal = 0;
-	}
+					/*< Head should point to last node of the list */
+					RootNode->Next = newNode;
+				}
 
-	return RetVal;
-}
+				tempNode->Next = newNode;
 
-unsigned char DoubleList_PopElement(MyDoubleList* List, DOUBLE_LIST_ELEMENT_TYPE* Element)
-{
-	unsigned char RetVal = 1;
+				newNode->Next = NULL;
 
-	if ((List != NULL) && (List->Next != NULL))
-	{
-		MyDoubleList* Temp = List->Next;
-
-		if (Temp->Next == NULL)
-		{
-			List->Next = NULL;
-		}
-
-		else
-		{
-			while (Temp->Next != NULL)
-			{
-				Temp = Temp->Next;
-			}
-
-			(Temp->Previous)->Next = NULL;
-		}
-
-		*Element = Temp->Element;
-
-		List->Element--;
-
-		free(Temp);
-	}
-	else
-	{
-		RetVal = 0;
-	}
-
-	return RetVal;
-}
-
-unsigned char DoubleList_InsertElement(MyDoubleList* List, DOUBLE_LIST_ELEMENT_TYPE Element,uint32_t Position)
-{
-	unsigned char RetVal = 0;
-
-	MyDoubleList* NewNode = (MyDoubleList*)malloc(sizeof(MyDoubleList));
-
-	uint32_t CurrentPosition = 0;
-
-	if ((NewNode != NULL) && (List != NULL))
-	{
-		/*< Start traversing from HeadNode pointer inorder to stop one node before the desired node. */
-		MyDoubleList* TempNode = List;
-
-		while ((TempNode->Next != NULL) && (CurrentPosition < Position))
-		{
-			TempNode = TempNode->Next;
-
-			CurrentPosition++;
-		}
-
-		if (CurrentPosition == Position)
-		{
-			NewNode->Element = Element;
-			NewNode->Next = TempNode->Next;
-
-			if (0 == CurrentPosition)
-			{
-				/*< If the element position is 0, then the previous pointer is NULL */
-				NewNode->Previous = NULL;
+				retVal = 1;
 			}
 			else
 			{
-				/*< Since we are stoping once node before the desired node, the previous node should the current temp node */
-				NewNode->Previous = TempNode;
+				free(newNode);
 			}
-
-			/*< Since we are stoping once node before the desired node, the next node of TempNode should be NewNode */
-			TempNode->Next = NewNode;
-
-			RetVal = 1;
-		}
-
-		else
-		{
-			/*< invalid position */
-			free(NewNode);
 		}
 	}
 
-	return RetVal;
+	return retVal;
 }
 
-unsigned char DoubleList_RemoveElement(MyDoubleList* List, DOUBLE_LIST_ELEMENT_TYPE* Element,  unsigned char Position)
+unsigned char MyDoubleList_PopElement(MyDoubleList* RootNode, void* Element)
 {
-	unsigned char RetVal = 0;
+	unsigned char retVal = 0;
 
-	uint32_t CurrentPosition = 0;
+	MyDoubleList* tempNode = NULL;
 
-	if ((List != NULL) && (List->Next != NULL))
+	if (NULL != RootNode->Next)
 	{
-		/*< Start traversing from HeadNode inorder. */
-		MyDoubleList* TempNode = List->Next;
+		tempNode = RootNode->Next;
 
-		while ((TempNode->Next != NULL) && (CurrentPosition < Position))
+		if (NULL != tempNode)
 		{
-			TempNode = TempNode->Next;
+			/*< make the root node point to new last node */
+			RootNode->Next = tempNode->Previous;
 
-			CurrentPosition++;
-		}
+			memcpy(Element, tempNode->Element, (uint16_t)RootNode->Element);
 
-		if (CurrentPosition == Position)
-		{
-			*Element = TempNode->Element;
+			free(tempNode->Element);
 
-			if (TempNode->Previous == NULL)
-			{
-				/*< 0th element is getting removed so update the head pointer node */
-				List->Next = TempNode->Next;
+			free(tempNode);
 
-				if (List->Next != NULL)
-				{
-					/*< If the 0 element is present then update the previous pointer of 0th element. */
-					(List->Next)->Previous = NULL;
-				}
-			}
-			else
-			{
-				(TempNode->Previous)->Next = TempNode->Next;
-
-				if (TempNode->Next != NULL)
-				{
-					(TempNode->Next)->Previous = TempNode->Previous;
-				}
-			}
-
-			List->Element--;
-
-			RetVal = 1;
+			retVal = 1;
 		}
 	}
 
-	return RetVal;
+	return retVal;
 }
 
-void DoubleList_TraverseElement(MyDoubleList* List)
+unsigned char MyDoubleList_InsertElement(MyDoubleList* RootNode, void* Element, uint16_t Position)
+{
+	unsigned char retVal = 0;
+
+	if (NULL != RootNode)
+	{
+		MyDoubleList* tempNode = RootNode->Next;
+	}
+}
+
+unsigned char MyDoubleList_RemoveElement(MyDoubleList* RootNode, void* Element, uint16_t Position)
+{
+
+}
+
+unsigned char MyDoubleList_GetElement(MyDoubleList* RootNode, void* Element, uint16_t Position)
+{
+
+}
+
+void MyDoubleList_Traverse(MyDoubleList* List)
 {
 	if (List != NULL)
 	{
@@ -213,8 +144,8 @@ void DoubleList_TraverseElement(MyDoubleList* List)
 
 			do 
 			{
-				printf_s("Element : %d\n", List->Element);
-				List = List->Next;
+				printf_s("Element : %d\n", *((unsigned int*)List->Element));
+				List = List->Previous;
 			} while (List != NULL);
 		}
 	}
