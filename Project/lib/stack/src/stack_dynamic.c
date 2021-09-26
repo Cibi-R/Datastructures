@@ -12,10 +12,26 @@ unsigned char MyDynamicStack_Create(MyDynamicStack** HeadNode, uint16_t ElementS
 	{
 		(*HeadNode)->Previous = NULL;
 
-		/*< store the size of the stack element to "Element" member of the dynamic stack Head pointer, even though it is 
-		    void pointer variable we will store the eleemnt size, and we will access the "Element" pointer variable of the 
-			HeadNode as a integer value */
+#if defined(DYNAMICALLY_ALLOCATE_MEMORY_FOR_ELEMENT_IN_ROOT)
+
+		(*HeadNode)->Element = (void*)malloc(sizeof(uint16_t));
+
+		if (NULL != (*HeadNode)->Element)
+		{
+			*((uint16_t*)((*HeadNode)->Element)) = ElementSize;
+		}
+		else
+		{
+			free(*HeadNode);
+
+			*HeadNode = NULL;
+		}
+#else
+		/*< store the size of the stack element to "Element" member of the dynamic stack Head pointer, even though it is
+	void pointer variable we will store the eleemnt size, and we will access the "Element" pointer variable of the
+	HeadNode as a integer value */
 		(*HeadNode)->Element = (void*)ElementSize;
+#endif
 
 		retVal = 1;
 	}
@@ -35,12 +51,19 @@ unsigned char MyDynamicStack_Push(MyDynamicStack* HeadNode, void* StackElement)
 
 		if (NULL != newNode)
 		{
+#if defined(DYNAMICALLY_ALLOCATE_MEMORY_FOR_ELEMENT_IN_ROOT)
+			newNode->Element = (void*)malloc(*((uint16_t*)HeadNode->Element));
+#else
 			newNode->Element = (void*)malloc((unsigned int)HeadNode->Element);
-
+#endif
 			if (NULL != newNode->Element)
 			{
 				/*< store the element value */
+#if defined(DYNAMICALLY_ALLOCATE_MEMORY_FOR_ELEMENT_IN_ROOT)
+				memcpy(newNode->Element, StackElement, *((uint16_t*)HeadNode->Element));
+#else
 				memcpy(newNode->Element, StackElement, (unsigned int)HeadNode->Element);
+#endif
 
 				/*< HeadNode->Previous will always point to the top of the stack, it could be null or valid element */
 				newNode->Previous = HeadNode->Previous;
@@ -77,8 +100,16 @@ unsigned char MyDynamicStack_Pop(MyDynamicStack* HeadNode, void* StackElement)
 			/*< tempNode->Previous will be the next top element of the stack */
 			HeadNode->Previous = tempNode->Previous;
 
-			/*< copy the top element of the stack */
-			memcpy(StackElement, tempNode->Element, (unsigned int)HeadNode->Element);
+			if (NULL != StackElement)
+			{
+				/*< copy the top element of the stack */
+#if defined(DYNAMICALLY_ALLOCATE_MEMORY_FOR_ELEMENT_IN_ROOT)
+				uint16_t stackElementSize = *((uint16_t*)HeadNode->Element);
+				memcpy(StackElement, tempNode->Element, *((uint16_t*)HeadNode->Element));
+#else
+				memcpy(StackElement, tempNode->Element, (unsigned int)HeadNode->Element);
+#endif
+			}
 
 			/*< free the stack element */
 			free(tempNode->Element);
@@ -103,13 +134,53 @@ unsigned char MyDynamicStack_Peek(MyDynamicStack* HeadNode, void* StackElement)
 		/*< check whether the stack is empty */
 		if (HeadNode->Previous != NULL)
 		{
+#if defined(DYNAMICALLY_ALLOCATE_MEMORY_FOR_ELEMENT_IN_ROOT)
+			memcpy(StackElement, HeadNode->Previous->Element, *((uint16_t*)HeadNode->Element));
+#else
 			memcpy(StackElement, HeadNode->Previous->Element, (unsigned int)HeadNode->Element);
+#endif
 
 			retVal = 1;
 		}
 	}
 
 	return retVal;
+}
+
+unsigned char MyDynamicStack_Is_Empty(MyDynamicStack* HeadNode)
+{
+	unsigned char retVal = 0;
+
+	if (HeadNode)
+	{
+		if (NULL == HeadNode->Previous)
+		{
+			retVal = 1;
+		}
+	}
+
+	return retVal;
+}
+
+uint16_t MyDynamicStack_Length(MyDynamicStack* HeadNode)
+{
+	uint16_t stackLength = 0;
+
+	if (NULL != HeadNode)
+	{
+		if (NULL != HeadNode->Previous)
+		{
+			do
+			{
+				stackLength++;
+
+				HeadNode = HeadNode->Previous;
+
+			} while (HeadNode != NULL);
+		}
+	}
+
+	return stackLength;
 }
 
 void MyDynamicStack_Traverse(MyDynamicStack* HeadNode)
@@ -126,9 +197,14 @@ void MyDynamicStack_Traverse(MyDynamicStack* HeadNode)
 		{
 			do
 			{
-				memcpy(&tempValue, tempNode->Element, (unsigned int)HeadNode->Element);
 
-				printf("stack element : %d\n", tempValue);
+#if defined(DYNAMICALLY_ALLOCATE_MEMORY_FOR_ELEMENT_IN_ROOT)
+				memcpy(&tempValue, tempNode->Element, *((uint16_t*)HeadNode->Element));
+#else
+				memcpy(&tempValue, tempNode->Element, (unsigned int)HeadNode->Element);
+#endif
+
+				printf("stack element : %c\n", tempValue);
 
 				tempNode = tempNode->Previous;
 

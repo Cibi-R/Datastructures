@@ -12,7 +12,7 @@ void UnitTest1_MyDynamicStack(void)
 		                        My Dynamic statck Unit Test 1                                           \n \
 ****************************************************************************************************\n");
 
-	if (MyDynamicQueue_Create(&myStack, sizeof(unsigned int)));
+	if (MyDynamicStack_Create(&myStack, sizeof(unsigned int)));
 	{
 		while (1)
 		{

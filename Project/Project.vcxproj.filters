@@ -69,6 +69,9 @@
     <ClCompile Include="trash\stack\src\stack_static_t.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="algo\stack\src\stack_algo.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\include.h">
@@ -135,6 +138,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="trash\stack\api\stack_static_t.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="algo\stack\api\stack_algo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\algo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

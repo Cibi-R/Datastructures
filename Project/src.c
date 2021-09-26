@@ -8,6 +8,8 @@
 #include BINARY_SEARCH_TREE_H
 #include DOUBLE_LISTt_H
 
+#include ALGO_STACK_H
+
 extern void Execute_Tree(void);
 
 int main()
@@ -41,9 +43,14 @@ int main()
 	UnitTest1_MyCircularList();
 #endif
 
-#if 1
+#if 0
 	UnitTest1_MyDoubleList();
 #endif
+
+#if 1
+	Algo_Stack();
+#endif
+
 	while (1);
 }
 

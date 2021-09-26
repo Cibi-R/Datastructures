@@ -7,5 +7,8 @@
 #include <stdint.h>
 #include <lib.h>
 #include <trash.h>
+#include <algo.h>
+
+typedef unsigned char bool;
 
 #endif //__INCLUDE_H__
