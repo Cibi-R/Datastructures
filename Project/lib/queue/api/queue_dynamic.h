@@ -21,6 +21,12 @@ typedef struct MyDynamicQueue_Tag
 extern unsigned char MyDynamicQueue_Create(MyDynamicQueue** HeadNode, uint16_t ElementSize);
 
 /// <summary>
+/// This function free's the queue. (freeing the queue by dequeueing all the element)
+/// </summary>
+/// <param name="HeadNode - address to the dynamic queue"></param>
+void MyDynamicQueue_Free(MyDynamicQueue* HeadNode);
+
+/// <summary>
 /// this function is used to enqueue the data to the queue
 /// </summary>
 /// <param name="HeadNode - Pointer to the Dynamic queue" ></param>

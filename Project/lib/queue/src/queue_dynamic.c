@@ -20,6 +20,17 @@ unsigned char MyDynamicQueue_Create(MyDynamicQueue** HeadNode, uint16_t ElementS
 	return retVal;
 }
 
+void MyDynamicQueue_Free(MyDynamicQueue* HeadNode)
+{
+	/*< dequeue all the element */
+	while (MyDynamicQueue_DeQueue(HeadNode, NULL));
+}
+
+void MyDynamicQueue_Delete(MyDynamicQueue* HeadNode)
+{
+
+}
+
 unsigned char MyDynamicQueue_EnQueue(MyDynamicQueue* HeadNode, void* QueueElement)
 {
 	unsigned char retVal = 0;
@@ -87,7 +98,10 @@ unsigned char MyDynamicQueue_DeQueue(MyDynamicQueue* HeadNode, void* QueueElemen
 
 			HeadNode->next = tempNode->next;
 
-			memcpy(QueueElement, tempNode->QueueElement, (unsigned int)HeadNode->QueueElement);
+			if (NULL != QueueElement)
+			{
+				memcpy(QueueElement, tempNode->QueueElement, (unsigned int)HeadNode->QueueElement);
+			}
 
 			/*< free the memory allocated to the queue data element */
 			free(tempNode->QueueElement);

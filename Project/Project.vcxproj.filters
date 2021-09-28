@@ -72,6 +72,12 @@
     <ClCompile Include="algo\stack\src\stack_algo.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lib\tree\binary_tree\src\binary_tree.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="trash\tree\src\binary_tree_t.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\include.h">
@@ -144,6 +150,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\algo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\tree\binary_tree\api\binary_tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="trash\tree\api\binary_tree_t.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

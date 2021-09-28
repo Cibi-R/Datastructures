@@ -48,6 +48,10 @@ int main()
 #endif
 
 #if 1
+	UnitTest1_MyBinaryTree();
+#endif
+
+#if 1
 	Algo_Stack();
 #endif
 
