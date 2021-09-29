@@ -31,7 +31,7 @@ typedef struct MyBinaryTree_Tag
 /// <param name="RootNode - base address to the binary tree"></param>
 /// <param name="size - size of the binary tree element"></param>
 /// <returns>1-success, 0-failure</returns>
-extern unsigned char MyDynamicTree_Create(MyBinaryTree** RootNode, uint16_t size);
+extern unsigned char MyDynamicBinaryTree_Create(MyBinaryTree** RootNode, uint16_t size);
 
 /// <summary>
 /// This function is used to insert an element to the list
@@ -39,12 +39,24 @@ extern unsigned char MyDynamicTree_Create(MyBinaryTree** RootNode, uint16_t size
 /// <param name="RootNode - base address to the binary tree"></param>
 /// <param name="Element - address of the element to be inserted"></param>
 /// <returns>1-success, 0-failure</returns>
-extern unsigned char MyDynamicTree_Insert(MyBinaryTree* RootNode, void* Element);
+extern unsigned char MyDynamicBinaryTree_Insert(MyBinaryTree* RootNode, void* Element);
 
 /// <summary>
-/// This function traverses the binary tree
+/// This function implements the pre order traversal - recursive
 /// </summary>
-/// <param name="MyTree - Base address of the binary tree"></param>
-void MyDynamicBinaryTree_Traverse(MyBinaryTree* MyTree);
+/// <param name="MyTree - Pointer to the binary tree"></param>
+extern void MyDynamicBinaryTree_PreorderRecursive(MyBinaryTree* MyTree);
+
+/// <summary>
+/// This function implements the In order traversal - recusive
+/// </summary>
+/// <param name="MyTree - Pointer to the binary tree"></param>
+extern void MyDynamicBinaryTree_InorderRecursive(MyBinaryTree* MyTree);
+
+/// <summary>
+/// This function implements the Post order traversal - recusive
+/// </summary>
+/// <param name="MyTree - Pointer to the binary tree"></param>
+extern void MyDynamicBinaryTree_PostorderRecursive(MyBinaryTree* MyTree);
 
 #endif //__BINARY_TREE_H__
