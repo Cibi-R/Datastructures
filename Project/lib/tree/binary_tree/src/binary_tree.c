@@ -1,9 +1,12 @@
 #include <include.h>
 #include BINARY_TREE_H
+#include STACK_DYNAMIC_H
 
 static void PreorderRecursive(Node* RootNode);
 static void InorderRecursive(Node* RootNode);
 static void PostorderRecursive(Node* RootNode);
+
+static void PreorderInterative(Node* rootNode);
 
 unsigned char MyDynamicBinaryTree_Create(MyBinaryTree** RootNode, uint16_t size)
 {
@@ -170,5 +173,92 @@ static void PostorderRecursive(Node* RootNode)
 	else
 	{
 		return;
+	}
+}
+
+void MyDynamicBinaryTree_BreadFirstTraversal(MyBinaryTree* myTree)
+{
+	Node* tempNode;
+
+	if (NULL != myTree)
+	{
+		tempNode = myTree->TreeNode;
+
+		/*< check whether tree is empty */
+		if (NULL != tempNode)
+		{
+			while (1)
+			{
+				printf("binary tree element : %d\n", *((unsigned int*)tempNode->Element));
+
+				if (NULL != tempNode->left)
+				{
+					MyDynamicQueue_EnQueue(myTree->LevelOrderQueue, (void*)&tempNode->left);
+				}
+				if (NULL != tempNode->right)
+				{
+					MyDynamicQueue_EnQueue(myTree->LevelOrderQueue, (void*)&tempNode->right);
+				}
+				
+				/*< when queue become empty all element would be traversed */
+				if (!MyDynamicQueue_DeQueue(myTree->LevelOrderQueue, (void*)&tempNode))
+				{
+					break;
+				}
+			}
+		}
+	}
+}
+
+void MyDynamicBinaryTree_PreorderInterative(MyBinaryTree* MyTree)
+{
+	Node* tempNode;
+
+	if (NULL != MyTree)
+	{
+		tempNode = MyTree->TreeNode;
+
+		PreorderInterative(tempNode);
+	}
+	else
+	{
+		printf("binary tree is not created!\n");
+	}
+}
+
+static void PreorderInterative(Node* rootNode)
+{
+	MyDynamicStack* myStack;
+
+	if (MyDynamicStack_Create(&myStack, sizeof(void*)))
+	{
+		if (NULL != rootNode)
+		{
+			while ((rootNode != NULL) || (!MyDynamicStack_Is_Empty(myStack)))
+			{
+				if (NULL != rootNode)
+				{
+					printf("binary tree element : %d\n", *((unsigned int*)rootNode->Element));
+
+					MyDynamicStack_Push(myStack, (void*)&rootNode);
+
+					rootNode = rootNode->left;
+				}
+				else
+				{
+					MyDynamicStack_Pop(myStack, (void*)&rootNode);
+
+					rootNode = rootNode->right;
+				}
+			}
+		}
+		else
+		{
+			printf("binary tree is empty!\n");
+		}
+	}
+	else
+	{
+		printf("binary tree traversal aborted due to stack creation failed\n");
 	}
 }

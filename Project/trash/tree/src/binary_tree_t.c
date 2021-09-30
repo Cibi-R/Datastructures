@@ -17,6 +17,8 @@ void UnitTest1_MyBinaryTree(void)
 	{
 		printf("### Enter the option ###\n1. Insert element\n2. PreOrder Traversal - Recursive\n");
 		printf("3. InOrder Traversal - Recusive\n4. PostOrder Traversal - Recursive\n");
+		printf("5. Level order/breath first traverse\n6. Preorder interative\n");
+		printf("7. Insert 10 to 70 to binary tree\n");
 
 		scanf("%d", &option);
 
@@ -50,6 +52,24 @@ void UnitTest1_MyBinaryTree(void)
 			case 4:
 			{
 				MyDynamicBinaryTree_PostorderRecursive(myTree);
+				break;
+			}
+			case 5:
+			{
+				MyDynamicBinaryTree_BreadFirstTraversal(myTree);
+				break;
+			}
+			case 6:
+			{
+				MyDynamicBinaryTree_PreorderInterative(myTree);
+				break;
+			}
+			case 7:
+			{
+				for (int value = 10; value < 80; value = value + 10)
+				{
+					MyDynamicBinaryTree_Insert(myTree, &value);
+				}
 				break;
 			}
 			default:
