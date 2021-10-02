@@ -1,8 +1,6 @@
 #ifndef __QUEUE_DYNAMIC_H__
 #define __QUEUE_DYNAMIC_H__
 
-#define DYNAMIC_QUEUE_ELEMENT int
-
 /// <summary>
 /// Structure to hold the data of a node
 /// </summary>

@@ -126,6 +126,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="algo\stack\src\single_list_algo.c" />
     <ClCompile Include="algo\stack\src\stack_algo.c" />
     <ClCompile Include="lib\list\src\circular_list.c" />
     <ClCompile Include="lib\list\src\double_list.c" />
@@ -149,6 +150,7 @@
     <ClCompile Include="trash\tree\src\binary_tree_t.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="algo\stack\api\single_list_algo.h" />
     <ClInclude Include="algo\stack\api\stack_algo.h" />
     <ClInclude Include="include\algo.h" />
     <ClInclude Include="include\include.h" />

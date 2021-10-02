@@ -7,6 +7,8 @@ static void InorderRecursive(Node* RootNode);
 static void PostorderRecursive(Node* RootNode);
 
 static void PreorderInterative(Node* rootNode);
+static void InorderInterative(Node* rootNode);
+static void PostorderInterative(Node* rootNode);
 
 unsigned char MyDynamicBinaryTree_Create(MyBinaryTree** RootNode, uint16_t size)
 {
@@ -249,6 +251,125 @@ static void PreorderInterative(Node* rootNode)
 					MyDynamicStack_Pop(myStack, (void*)&rootNode);
 
 					rootNode = rootNode->right;
+				}
+			}
+		}
+		else
+		{
+			printf("binary tree is empty!\n");
+		}
+	}
+	else
+	{
+		printf("binary tree traversal aborted due to stack creation failed\n");
+	}
+}
+
+void MyDynamicBinaryTree_InorderInterative(MyBinaryTree* MyTree)
+{
+	Node* tempNode;
+
+	if (NULL != MyTree)
+	{
+		tempNode = MyTree->TreeNode;
+
+		InorderInterative(tempNode);
+	}
+	else
+	{
+		printf("binary tree is not created!\n");
+	}
+}
+
+static void InorderInterative(Node* rootNode)
+{
+	MyDynamicStack* myStack;
+
+	if (MyDynamicStack_Create(&myStack, sizeof(void*)))
+	{
+		if (NULL != rootNode)
+		{
+			while ((rootNode != NULL) || (!MyDynamicStack_Is_Empty(myStack)))
+			{
+				if (NULL != rootNode)
+				{
+					MyDynamicStack_Push(myStack, (void*)&rootNode);
+
+					rootNode = rootNode->left;
+				}
+				else
+				{
+					MyDynamicStack_Pop(myStack, (void*)&rootNode);
+
+					printf("binary tree element : %d\n", *((unsigned int*)rootNode->Element));
+
+					rootNode = rootNode->right;
+				}
+			}
+		}
+		else
+		{
+			printf("binary tree is empty!\n");
+		}
+	}
+	else
+	{
+		printf("binary tree traversal aborted due to stack creation failed\n");
+	}
+}
+
+void MyDynamicBinaryTree_PostorderInterative(MyBinaryTree* MyTree)
+{
+	Node* tempNode;
+
+	if (NULL != MyTree)
+	{
+		tempNode = MyTree->TreeNode;
+
+		PostorderInterative(tempNode);
+	}
+	else
+	{
+		printf("binary tree is not created!\n");
+	}
+}
+
+static void PostorderInterative(Node* rootNode)
+{
+	MyDynamicStack* myStack;
+
+	Node* previousNode = NULL;
+
+	if (MyDynamicStack_Create(&myStack, sizeof(void*)))
+	{
+		if (NULL != rootNode)
+		{
+			while ((rootNode != NULL) || (!MyDynamicStack_Is_Empty(myStack)))
+			{
+				if (NULL != rootNode)
+				{
+					MyDynamicStack_Push(myStack, (void*)&rootNode);
+
+					rootNode = rootNode->left;
+				}
+				else
+				{
+					MyDynamicStack_Peek(myStack, (void*)&rootNode);
+
+					if ((rootNode->right == NULL) || (rootNode->right == previousNode))
+					{
+						printf("binary tree element : %d\n", *((unsigned int*)rootNode->Element));
+
+						previousNode = rootNode;
+
+						MyDynamicStack_Pop(myStack, NULL);
+
+						rootNode = NULL;
+					}
+					else
+					{
+						rootNode = rootNode->right;
+					}
 				}
 			}
 		}

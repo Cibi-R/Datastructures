@@ -35,7 +35,7 @@ int main()
 #endif
 
 	/*< singly circular list unit test */
-#if 0
+#if 1
 	UnitTest1_MySingleList();
 #endif
 
@@ -47,7 +47,7 @@ int main()
 	UnitTest1_MyDoubleList();
 #endif
 
-#if 1
+#if 0
 	UnitTest1_MyBinaryTree();
 #endif
 

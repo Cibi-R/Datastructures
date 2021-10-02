@@ -1,8 +1,6 @@
 #ifndef __STACK_DYNAMIC_H__
 #define __STACK_DYNAMIC_H__
 
-#define DYNAMICALLY_ALLOCATE_MEMORY_FOR_ELEMENT_IN_ROOT
-
 /// <summary>
 /// Structure to hold the data of a node
 /// </summary>

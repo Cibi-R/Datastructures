@@ -71,4 +71,16 @@ extern void MyDynamicBinaryTree_BreadFirstTraversal(MyBinaryTree* myTree);
 /// <param name="MyTree"></param>
 extern void MyDynamicBinaryTree_PreorderInterative(MyBinaryTree* MyTree);
 
+/// <summary>
+/// This function traversas the binary tree inetratively
+/// </summary>
+/// <param name="MyTree"></param>
+extern void MyDynamicBinaryTree_InorderInterative(MyBinaryTree* MyTree);
+
+/// <summary>
+/// This function traversas the binary tree interatively
+/// </summary>
+/// <param name="MyTree"></param>
+void MyDynamicBinaryTree_PostorderInterative(MyBinaryTree* MyTree);
+
 #endif //__BINARY_TREE_H__

@@ -13,8 +13,20 @@ unsigned char MySingleList_Create(MySingleList** RootNode, uint16_t ElementSize)
 		/*< make list empty */
 		(*RootNode)->Next = NULL;
 
+#ifdef DYNAMICALLY_ALLOCATE_MEMORY_FOR_ELEMENT_IN_ROOT
+		(*RootNode)->Element = (void*)malloc(sizeof(uint16_t));
+		if (NULL == (*RootNode)->Element)
+		{
+			retVal = 0;
+		}
+		else
+		{
+			*((uint16_t*)(*RootNode)->Element) = ElementSize;
+		}
+#else
 		/* store the size of the node data to Element memer of the MySingleList HeadNode */
 		(*RootNode)->Element = (void*)ElementSize;
+#endif
 	}
 	else
 	{
@@ -34,14 +46,21 @@ unsigned char MySingleList_PushElement(MySingleList* RootNode, void* Element)
 
 		if (NULL != newNode)
 		{
+#ifdef DYNAMICALLY_ALLOCATE_MEMORY_FOR_ELEMENT_IN_ROOT
+			newNode->Element = (void*)malloc(*((uint16_t*)RootNode->Element));
+#else
 			/*< allocate memory for the list element */
 			newNode->Element = (void*)malloc((unsigned int)RootNode->Element);
+#endif
 
 			if (NULL != newNode->Element)
 			{
+#ifdef DYNAMICALLY_ALLOCATE_MEMORY_FOR_ELEMENT_IN_ROOT
+				memcpy(newNode->Element, Element, *((uint16_t*)RootNode->Element));
+#else
 				/*< copy the element to be pushed */
 				memcpy(newNode->Element, Element, (unsigned int)RootNode->Element);
-
+#endif
 				/*< mark the next of new node as null */
 				newNode->Next = NULL;
 
@@ -83,7 +102,12 @@ unsigned char MySingleList_PopElement(MySingleList* RootNode, void* Element)
 			}
 			/*< we are at last element */
 
+#ifdef DYNAMICALLY_ALLOCATE_MEMORY_FOR_ELEMENT_IN_ROOT
+			memcpy(Element, tempNode->Next->Element, *((uint16_t*)RootNode->Element));
+#else
+			/*< copy the element to be pushed */
 			memcpy(Element, tempNode->Next->Element, (unsigned int)RootNode->Element);
+#endif
 
 			/*< free the memory for the element */
 			free(tempNode->Next->Element);
@@ -126,13 +150,21 @@ unsigned char MySingleList_InsertElement(MySingleList* RootNode, void* Element, 
 
 			if (NULL != newNode)
 			{
+#ifdef DYNAMICALLY_ALLOCATE_MEMORY_FOR_ELEMENT_IN_ROOT
 				newNode->Element = (void*)malloc((unsigned int)RootNode->Element);
+#else
+				newNode->Element = (void*)malloc((unsigned int)RootNode->Element);
+#endif
 
 				if (NULL != newNode->Element)
 				{
 					/*< copy the element to the newly created node */
-					memcpy(newNode->Element, Element, RootNode->Element);
-
+#ifdef DYNAMICALLY_ALLOCATE_MEMORY_FOR_ELEMENT_IN_ROOT
+					memcpy(newNode->Element, Element, *((uint16_t*)RootNode->Element));
+#else
+					/*< copy the element to be pushed */
+					memcpy((newNode->Element, Element, (unsigned int)RootNode->Element);
+#endif
 					/*< insert the newly created node */
 					newNode->Next = tempNode->Next;
 					
@@ -172,7 +204,12 @@ unsigned char MySingleList_RemoveElement(MySingleList* RootNode, void* Element, 
 		{
 			MySingleList* linkNode = NULL;
 
+#ifdef DYNAMICALLY_ALLOCATE_MEMORY_FOR_ELEMENT_IN_ROOT
+			memcpy(Element, tempNode->Next->Element, *((uint16_t*)RootNode->Element));
+#else
+			/*< copy the element to be pushed */
 			memcpy(Element, tempNode->Next->Element, (unsigned int)RootNode->Element);
+#endif
 
 			linkNode = tempNode->Next->Next;
 

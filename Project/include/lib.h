@@ -1,6 +1,8 @@
 #ifndef __LIBRARY_H__
 #define __LIBRARY_H__
 
+#define DYNAMICALLY_ALLOCATE_MEMORY_FOR_ELEMENT_IN_ROOT
+
 #define STACK_STATIC_H          "lib/stack/api/stack_static.h"
 #define STACK_DYNAMIC_H         "lib/stack/api/stack_dynamic.h"
 
