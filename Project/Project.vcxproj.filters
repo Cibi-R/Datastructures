@@ -81,6 +81,18 @@
     <ClCompile Include="algo\stack\src\single_list_algo.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lib\tree\binary_tree_static\src\binary_tree_static.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="trash\tree\src\binary_tree_static_t.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\tree\binary_heap_static\src\binary_heap_static.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="trash\tree\src\binary_heap_static_t.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\include.h">
@@ -162,6 +174,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="algo\stack\api\single_list_algo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\tree\binary_tree_static\api\binary_tree_static.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="trash\tree\api\binary_tree_static_t.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\tree\binary_heap_static\api\binary_heap_static.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="trash\tree\api\binary_heap_static_t.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

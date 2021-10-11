@@ -7,6 +7,7 @@
 #include CIRCULAR_LISTt_H
 #include BINARY_SEARCH_TREE_H
 #include DOUBLE_LISTt_H
+#include BINARY_TREE_STATICt_H
 
 #include ALGO_STACK_H
 
@@ -35,7 +36,7 @@ int main()
 #endif
 
 	/*< singly circular list unit test */
-#if 1
+#if 0
 	UnitTest1_MySingleList();
 #endif
 
@@ -51,10 +52,17 @@ int main()
 	UnitTest1_MyBinaryTree();
 #endif
 
-#if 1
+#if 0
 	Algo_Stack();
 #endif
 
+#if 0
+	UnitTest1_MyStaticBinaryTree();
+#endif 
+
+#if 1
+	UnitTest1_MyStaticBinaryHeap();
+#endif
 	while (1);
 }
 

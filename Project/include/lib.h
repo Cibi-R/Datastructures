@@ -16,5 +16,7 @@
 
 #define BINARY_TREE_H           "lib/tree/binary_tree/api/binary_tree.h"
 #define BINARY_SEARCH_TREE_H    "lib/tree/binary_search_tree/api/binary_search_tree.h"
+#define STATIC_BINARY_TREE_H    "lib/tree/binary_tree_static/api/binary_tree_static.h"
+#define STATIC_BINARY_HEAP_H    "lib/tree/binary_heap_static/api/binary_heap_static.h"
 
 #endif //__LIBRARY_H__
