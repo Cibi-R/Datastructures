@@ -17,7 +17,7 @@ void UnitTest1_MyStaticBinaryHeap(void)
 
 	while (1)
 	{
-		printf_s("1. Insert Element\n2. Traverse element\n");
+		printf_s("1. Insert Element\n2. Traverse element\n3. Pop element\n4. Insert automatic\n");
 		scanf("%d", &option);
 
 		switch (option)
@@ -31,6 +31,47 @@ void UnitTest1_MyStaticBinaryHeap(void)
 					printf_s("Element inserted successfully\n");
 				}
 				else { printf_s("Failed at inserting element\n"); }
+				break;
+			}
+			case 2:
+			{
+				MyStaticBinaryHeap_Traverse(&myHeap);
+				break;
+			}
+			case 3:
+			{
+				if (MyStaticBinaryHeap_Pop(&myHeap, &option))
+				{
+					printf("popped element : %d\n", option);
+				}
+				else
+				{
+					printf("element pop failed\n");
+				}
+				break;
+			}
+			case 4:
+			{
+				int start;
+				int end;
+				int periodicity;
+
+				printf("enter start : \n");
+				scanf("%d", &start);
+				printf("enter end : \n");
+				scanf("%d", &end);
+				printf("periodicity : ");
+				scanf("%d", &periodicity);
+
+				for (;start <= end; start = periodicity + start)
+				{
+					if (!MyStaticBinaryHeap_Push(&myHeap, &start))
+					{
+						break;
+					}
+				}
+				
+				printf("elements pushed successfully\n");
 				break;
 			}
 			default:
